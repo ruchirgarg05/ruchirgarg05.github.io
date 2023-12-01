@@ -1,10 +1,14 @@
-# ruchirgarg05.github.io
-
-# Quantitative Analyst
-
 ### Education
-UCSD CS Masters
-IIT Indore CS Btech
+
+University of California San Diego
+MS Computer Science (Jacobs School of Engineering)
+Minor: Asset Management (Rady School of Business)
+
+
+Indian Institute of Technology Indore
+Bachelors Computer Science
+
+### Where Pen meets paper
 
 ### Work experience
 Quant Analyst @ Neuravest Research
@@ -15,7 +19,9 @@ Sr. Software Engineer @D.E.Shaw & Co.
  - Infra for R&D.
  - ...
 
-### Project:
+### Projects:
 Profile system timings..
 RL player for BlackJack
 Research...
+
+
