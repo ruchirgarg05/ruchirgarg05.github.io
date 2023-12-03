@@ -267,6 +267,31 @@
 }
 
 
+.skills-container {
+  display: flex;
+  justify-content: space-around;
+  background-color: #222; /* or any color that matches your design */
+  color: #fff; /* for white text */
+  padding: 20px 0;
+}
+
+.skills-group {
+  text-align: center;
+  width: 30%; /* Adjust based on total number of groups */
+}
+
+.skills-group i {
+  font-size: 3em; /* Adjust icon size as needed */
+  margin-bottom: 10px;
+}
+
+.skills-heading {
+  text-align: center;
+  width: 100%;
+  color: #fff; /* for white text */
+  margin-bottom: 20px;
+}
+
   
 </style>
 
@@ -385,7 +410,7 @@
   <h3>Publications</h3>
   
   <div class="publication-entry">
-    <h4>A Fast Adaptive Active Learning Using Kernel Ridge Regression and Clustering for Non-stationary Environmente</h4>
+    <h4>A Fast Adaptive Active Learning Using Kernel Ridge Regression and Clustering for Non-stationary Environment.</h4>
     <a href="https://drive.google.com/file/d/1r-hRI3PmJ7yc4-9h73Gz2G4GkQRwJpuz/view?usp=drive_link" target="_blank">Read the Paper</a>
     <!-- You can add more publication entries here -->
   </div>
@@ -404,6 +429,28 @@
 
 
 
+<!-- Include Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+<!-- Skills Section -->
+<div class="skills-container">
+  <h2 class="skills-heading">Skills</h2>
+  <div class="skills-group">
+    <i class="fas fa-database"></i> <!-- Database Icon -->
+    <h3>Languages and Databases</h3>
+    <p>Python, Java, SQL, MongoDB, HTML, JavaScript</p>
+  </div>
+  <div class="skills-group">
+    <i class="fas fa-tools"></i> <!-- Tools Icon -->
+    <h3>Tools/Technologies</h3>
+    <p>Git, LaTeX, Android, Power BI</p>
+  </div>
+  <div class="skills-group">
+    <i class="fas fa-cogs"></i> <!-- Frameworks Icon -->
+    <h3>Frameworks and Libraries</h3>
+    <p>TensorFlow, Keras, PyTorch, NumPy, SciPy, Scikit-learn, Pandas</p>
+  </div>
+</div>
 
 
 
