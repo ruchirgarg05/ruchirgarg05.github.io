@@ -234,6 +234,7 @@
 
 
 
+
 <!-- Experience Timeline Section -->
 <style>
   .timeline {
@@ -253,11 +254,12 @@
   }
   .timeline-content {
     margin-bottom: 30px;
-    margin-left: 30px;
+    margin-left: 40px; /* Adjusted margin to push content to the right */
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 4px;
     position: relative;
+    width: 90%; /* Adjusted width to make it broader */
   }
   .company {
     font-weight: bold;
@@ -271,7 +273,68 @@
     font-size: 1.25rem;
     color: #333;
   }
+  /* Adjust the overall container width if needed */
+  .container {
+    width: 95%; /* Increased width */
+    max-width: none; /* Remove max-width limitation if it's there */
+    margin: auto; /* Center the container */
+  }
+
+  .education-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  .education-column {
+    width: 45%; /* Adjust the width as needed */
+  }
+  .education-entry {
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .graduation-cap {
+    color: #6c757d;
+    margin-right: 5px;
+  }
+
+  
 </style>
+
+
+<div class="education-container">
+  <div class="education-column">
+    <h3>Bachelors</h3>
+    <div class="education-entry">
+      <i class="fas fa-graduation-cap graduation-cap"></i>
+      <strong>IIT Indore</strong>
+      <p>B-Tech Computer Science</p>
+      <p>Graduated: June 2018</p>
+      <p>Minor in Econometrics, Macro/Micro Economics</p>
+      <!-- Additional details about Bachelors can go here -->
+    </div>
+  </div>
+
+  <div class="education-column">
+    <h3>Masters</h3>
+    <div class="education-entry">
+      <i class="fas fa-graduation-cap graduation-cap"></i>
+      <strong>UCSD</strong>
+      <p>MS Computer Science</p>
+      <p>Graduated: June 2023</p>
+      <p>Specialization in NLP, Vision, Reinforcement Learning</p>
+      <p>Minor in Asset Management, Data Science for Finance (UCSD Rady School of Business)</p>
+      <!-- Additional details about Masters can go here -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
 <div class="container mt-5">
   <div class="row">
@@ -341,52 +404,6 @@
 </div>
 
 
-
-<!-- Experience Timeline Section -->
-<style>
-  .timeline {
-    border-left: 4px solid #d3d3d3;
-    position: relative;
-    padding: 20px;
-    margin-top: 30px;
-  }
-  .timeline-dot {
-    width: 15px;
-    height: 15px;
-    background-color: #d3d3d3;
-    border-radius: 50%;
-    position: absolute;
-    left: -7.5px;
-    top: 15px;
-  }
-  .timeline-content {
-    margin-bottom: 30px;
-    margin-left: 40px; /* Adjusted margin to push content to the right */
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    position: relative;
-    width: 90%; /* Adjusted width to make it broader */
-  }
-  .company {
-    font-weight: bold;
-    color: #6c757d;
-  }
-  .date {
-    color: #888;
-    float: right;
-  }
-  .position-title {
-    font-size: 1.25rem;
-    color: #333;
-  }
-  /* Adjust the overall container width if needed */
-  .container {
-    width: 95%; /* Increased width */
-    max-width: none; /* Remove max-width limitation if it's there */
-    margin: auto; /* Center the container */
-  }
-</style>
 
 
 
