@@ -267,9 +267,12 @@
 }
 
 .skills-container {
-  background-color: #000; /* This should be the same as your page's background color */
-  color: #fff; /* Assuming your page uses white text */
-  padding: 40px 0; /* Adjust padding to your preference */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  padding: 20px 0;
   margin-top: 30px;
 }
 
@@ -278,16 +281,42 @@
   width: 30%; /* Adjust based on total number of groups */
 }
 
-.skills-group i {
+.skill-icon {
   font-size: 3em; /* Adjust icon size as needed */
+  color: #c71585; /* Or any color you want for the icons */
   margin-bottom: 10px;
-  color: #c71585; /* This should match the icon color on your page */
 }
+
+.skills-group h3 {
+  color: #fff; /* White text for headings */
+}
+
+.skills-group p {
+  color: #fff; /* White text for paragraphs */
+}
+
+/* Ensure the container fits the whole width if needed */
+.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Additional responsive design adjustments if necessary */
+@media (max-width: 768px) {
+  .skills-container {
+    flex-direction: column;
+  }
+  .skills-group {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
 
 .skills-heading {
   text-align: center;
   width: 100%;
-  color: #fff; /* This should be the text color for the heading */
+  color: #641111; /* This should be the text color for the heading */
   margin-bottom: 20px;
 }
 
