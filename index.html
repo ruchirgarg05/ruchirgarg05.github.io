@@ -465,11 +465,41 @@
         <div class="timeline-content">
           <div class="timeline-dot"></div>
           <h4 class="position-title">Quantitative Analyst</h4>
-          <span class="company">Neuravest Reasearch</span> - <span class="date">Jun 2023 - Present</span>
-          <p>Working on sentiment strategy</p>
-          <p>Working on Insititutional flow strtegies</p>
+          <span class="company">Neuravest Research</span> - <span class="date">Jun 2023 - Present</span>
+          <ul>
+              <li>
+                  <p><strong>Intraday Long-Short Equity Strategy:</strong></p>
+                  <ul>
+                      <li><strong>Objective:</strong> Developed an equity-based intraday long-short strategy using institutional flow data.</li>
+                      <li><strong>Performance:</strong> Achieved a live Sharpe ratio of 3.7.</li>
+                      <li><strong>Key Technique:</strong> Leveraged order book data for strategic exits.</li>
+                  </ul>
+              </li>
+              <li>
+                  <p><strong>Beta Neutral Sentiment Strategy:</strong></p>
+                  <ul>
+                      <li><strong>Data Source:</strong> Utilized DowJonesNewsWire for sentiment analysis.</li>
+                      <li><strong>Approach:</strong> Combined sentiment signals from an instruct LLM model with technical signals, using Markowitz optimization for allocations.</li>
+                      <li><strong>Hedging:</strong> Employed sector ETF shorts for hedging long positions.</li>
+                      <li><strong>Performance:</strong> Achieved a live Sharpe ratio of 1.93.</li>
+                  </ul>
+              </li>
+              <li>
+                  <p><strong>Event-Based Sentiment Strategy:</strong></p>
+                  <ul>
+                      <li><strong>Feature:</strong> Developed sentiment features based on text and topic analysis.</li>
+                      <li><strong>Hedging:</strong> Strategy hedged with sector ETFs.</li>
+                      <li><strong>Control:</strong> Adjusted signal combination coefficients based on market regime and fundamental features.</li>
+                      <li><strong>Performance:</strong> Reached a Sharpe ratio of 2.33 in testing phase.</li>
+                  </ul>
+              </li>
+              <li><strong>Current Project:</strong> Working on a reinforcement learning-based allocation algorithm for the sentiment strategy.</li>
+          </ul>
           <!-- Other points can be added here -->
-        </div>
+      </div>
+      
+
+
         
         <div class="timeline-content">
           <div class="timeline-dot"></div>
@@ -485,7 +515,7 @@
                 <li>Introduced diverse file-based systems (H5, Pkl, Redis backends) within the overlay for optimized storage and readability.</li>
               </ul>
             </li>
-            <li>Executed optimizations for the storage and querying of extensive historical data (up to ten years), resulting in a 10x improvement in data retrieval times:
+            <li>Executed optimizations for the storage and querying of extensive historical data (up to ten years), resulting in a 6-7x improvement in data retrieval times:
               <ul>
                 <li>Applied sharding on custom key axes and parallel chunked updates.</li>
                 <li>Research and deploy repartitioning schedule of h5 for non-contiguous data, realizing (1.5x amortized efficiency) </li>
