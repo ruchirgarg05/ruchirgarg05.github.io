@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cook's Distance: Derivation and Use in Linear Regression</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cook's Distance: Derivation and Use in Linear Regression</h1>
+
+    <div class="section">
+        <h2>1. Introduction to Cook's Distance</h2>
+        <p>Cook's distance is a measure used to identify influential observations in linear regression models. It quantifies the impact of deleting a given observation on the model's fitted values.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Derivation of Cook's Distance</h2>
+        
+        <h3>Step 1: Define the Linear Regression Model</h3>
+        <p>Consider the linear regression model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>where y is the response vector, X is the design matrix, β is the vector of coefficients, and ε is the error term.</p>
+
+        <h3>Step 2: OLS Estimator</h3>
+        <p>The OLS estimator of β is:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}
+            \]
+        </div>
+
+        <h3>Step 3: Fitted Values</h3>
+        <p>The fitted values are given by:</p>
+        <div class="equation">
+            \[
+            \hat{\mathbf{y}} = \mathbf{X}\hat{\boldsymbol{\beta}} = \mathbf{H}\mathbf{y}
+            \]
+        </div>
+        <p>where H = X(X'X)⁻¹X' is the hat matrix.</p>
+
+        <h3>Step 4: Change in Fitted Values</h3>
+        <p>Let β̂₍ᵢ₎ be the OLS estimate when the i-th observation is removed. The change in fitted values is:</p>
+        <div class="equation">
+            \[
+            \hat{\mathbf{y}} - \hat{\mathbf{y}}_{(i)} = \mathbf{X}(\hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_{(i)})
+            \]
+        </div>
+
+        <h3>Step 5: Express β̂₍ᵢ₎ in Terms of β̂</h3>
+        <p>Using the Sherman-Morrison-Woodbury formula:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}}_{(i)} = \hat{\boldsymbol{\beta}} - \frac{(\mathbf{X}'\mathbf{X})^{-1}\mathbf{x}_i'e_i}{1-h_{ii}}
+            \]
+        </div>
+        <p>where xᵢ is the i-th row of X, eᵢ is the i-th residual, and hᵢᵢ is the i-th diagonal element of H.</p>
+
+        <h3>Step 6: Derive Cook's Distance</h3>
+        <p>Cook's distance for the i-th observation is defined as:</p>
+        <div class="equation">
+            \[
+            D_i = \frac{(\hat{\mathbf{y}} - \hat{\mathbf{y}}_{(i)})'(\hat{\mathbf{y}} - \hat{\mathbf{y}}_{(i)})}{p\hat{\sigma}^2}
+            \]
+        </div>
+        <p>where p is the number of parameters and σ̂² is the mean squared error.</p>
+
+        <h3>Step 7: Simplify the Expression</h3>
+        <p>After substitution and simplification, we get:</p>
+        <div class="equation">
+            \[
+            D_i = \frac{e_i^2}{p\hat{\sigma}^2} \cdot \frac{h_{ii}}{(1-h_{ii})^2}
+            \]
+        </div>
+        <p>This is the final expression for Cook's distance.</p>
+    </div>
+
+    <div class="section">
+        <h2>3. Interpretation and Use of Cook's Distance</h2>
+        
+        <h3>Identifying Influential Observations</h3>
+        <ul>
+            <li>Large values of Dᵢ indicate influential observations.</li>
+            <li>A common rule of thumb is to consider observations with Dᵢ > 4/n as influential, where n is the number of observations.</li>
+            <li>Another approach is to look for observations with Dᵢ > 1.</li>
+        </ul>
+
+        <h3>Visual Representation</h3>
+        <div class="equation">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+                <rect x="50" y="50" width="300" height="200" fill="none" stroke="black"/>
+                <line x1="50" y1="250" x2="350" y2="250" stroke="black"/>
+                <line x1="50" y1="250" x2="50" y2="50" stroke="black"/>
+                <text x="200" y="280" text-anchor="middle">Observation Index</text>
+                <text x="30" y="150" transform="rotate(-90, 30, 150)" text-anchor="middle">Cook's Distance</text>
+                <path d="M50,250 L100,200 L150,230 L200,100 L250,240 L300,220 L350,50" fill="none" stroke="blue"/>
+                <circle cx="200" cy="100" r="5" fill="red"/>
+                <text x="210" y="90">Influential Point</text>
+            </svg>
+        </div>
+
+        <h3>Practical Use in Regression Analysis</h3>
+        <ol>
+            <li><strong>Model Diagnosis:</strong> Identify observations that have a disproportionate impact on the regression results.</li>
+            <li><strong>Data Quality Check:</strong> High Cook's distance might indicate data entry errors or unusual events that need investigation.</li>
+            <li><strong>Robust Modeling:</strong> By identifying influential points, you can assess the stability of your model and consider robust regression techniques if necessary.</li>
+            <li><strong>Variable Selection:</strong> In stepwise regression, Cook's distance can help in understanding which observations drive the inclusion or exclusion of variables.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>4. Limitations and Considerations</h2>
+        <ul>
+            <li>Cook's distance should be used in conjunction with other diagnostic tools, not in isolation.</li>
+            <li>It doesn't distinguish between beneficial and detrimental influence.</li>
+            <li>The cutoff points (like 4/n or 1) are rules of thumb and may not be appropriate for all situations.</li>
+            <li>In high-dimensional spaces, the interpretation of Cook's distance can be less straightforward.</li>
+        </ul>
+    </div>
+</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cook's Distance and Sherman-Morrison-Woodbury Formula</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous content remains unchanged -->
+
+    <div class="section">
+        <h2>Appendix: Derivation of Sherman-Morrison-Woodbury Formula</h2>
+        
+        <h3>Introduction</h3>
+        <p>The Sherman-Morrison-Woodbury (SMW) formula provides a way to compute the inverse of a matrix after a small-rank update. It's particularly useful in updating regression coefficients when adding or removing observations.</p>
+
+        <h3>The Formula</h3>
+        <p>For a non-singular square matrix A and vectors u and v, the SMW formula states:</p>
+        <div class="equation">
+            \[
+            (A + uv')^{-1} = A^{-1} - \frac{A^{-1}uv'A^{-1}}{1 + v'A^{-1}u}
+            \]
+        </div>
+
+        <h3>Derivation</h3>
+        <ol>
+            <li><strong>Step 1:</strong> Let B = A + uv'. We want to find B⁻¹.</li>
+            
+            <li><strong>Step 2:</strong> Assume B⁻¹ has the form:
+                <div class="equation">
+                    \[
+                    B^{-1} = A^{-1} + xA^{-1}uv'A^{-1}
+                    \]
+                </div>
+                where x is a scalar we need to determine.
+            </li>
+            
+            <li><strong>Step 3:</strong> For this to be the inverse, it must satisfy BB⁻¹ = I. Let's multiply B and our assumed B⁻¹:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    BB^{-1} &= (A + uv')(A^{-1} + xA^{-1}uv'A^{-1}) \\
+                    &= AA^{-1} + xAA^{-1}uv'A^{-1} + uv'A^{-1} + xuv'A^{-1}uv'A^{-1} \\
+                    &= I + xuu'A^{-1} + uv'A^{-1} + xuv'A^{-1}uv'A^{-1}
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+            
+            <li><strong>Step 4:</strong> For this to equal I, we need:
+                <div class="equation">
+                    \[
+                    xu'A^{-1} + v'A^{-1} + xv'A^{-1}uv'A^{-1} = 0
+                    \]
+                </div>
+            </li>
+            
+            <li><strong>Step 5:</strong> Factor out v'A⁻¹:
+                <div class="equation">
+                    \[
+                    v'A^{-1}(xu + 1 + xv'A^{-1}u) = 0
+                    \]
+                </div>
+            </li>
+            
+            <li><strong>Step 6:</strong> For this to be true for all v, we must have:
+                <div class="equation">
+                    \[
+                    xu + 1 + xv'A^{-1}u = 0
+                    \]
+                </div>
+            </li>
+            
+            <li><strong>Step 7:</strong> Solve for x:
+                <div class="equation">
+                    \[
+                    x = -\frac{1}{1 + v'A^{-1}u}
+                    \]
+                </div>
+            </li>
+            
+            <li><strong>Step 8:</strong> Substitute this value of x back into our assumed form of B⁻¹:
+                <div class="equation">
+                    \[
+                    B^{-1} = A^{-1} - \frac{A^{-1}uv'A^{-1}}{1 + v'A^{-1}u}
+                    \]
+                </div>
+            </li>
+        </ol>
+
+        <h3>Conclusion</h3>
+        <p>We have thus derived the Sherman-Morrison-Woodbury formula. This formula allows us to efficiently compute the inverse of a matrix after a rank-one update, which is crucial in many statistical and computational applications, including the derivation of Cook's distance.</p>
+
+        <h3>Application in Cook's Distance</h3>
+        <p>In the context of Cook's distance, we use this formula to efficiently compute the regression coefficients after removing a single observation. Specifically:</p>
+        <ul>
+            <li>A corresponds to X'X</li>
+            <li>u corresponds to xᵢ' (the i-th row of X)</li>
+            <li>v corresponds to xᵢ</li>
+        </ul>
+        <p>This allows us to express β̂₍ᵢ₎ (the coefficients without the i-th observation) in terms of β̂ (the coefficients with all observations), which is a key step in deriving the computationally efficient form of Cook's distance.</p>
+    </div>
+</body>
+</html>
