@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions for Equivalence of MAP and Ridge Regression Estimates</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conditions for Equivalence of MAP and Ridge Regression Estimates</h1>
+
+    <div class="section">
+        <h2>1. Introduction</h2>
+        <p>We'll explore the conditions under which Maximum A Posteriori (MAP) estimates in Bayesian inference are equivalent to Ridge Regression estimates in frequentist statistics.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Ridge Regression</h2>
+        <p>Ridge Regression minimizes the following objective function:</p>
+        <div class="equation">
+            \[
+            L(\beta) = \|y - X\beta\|^2 + \lambda\|\beta\|^2
+            \]
+        </div>
+        <p>The Ridge estimate is given by:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_{Ridge} = (X'X + \lambda I)^{-1}X'y
+            \]
+        </div>
+        <p>where λ > 0 is the regularization parameter.</p>
+    </div>
+
+    <div class="section">
+        <h2>3. Bayesian Framework</h2>
+        <p>In the Bayesian framework, we seek to maximize the posterior probability:</p>
+        <div class="equation">
+            \[
+            P(\beta|y) \propto P(y|\beta)P(\beta)
+            \]
+        </div>
+        <p>Where P(β|y) is the posterior, P(y|β) is the likelihood, and P(β) is the prior.</p>
+    </div>
+
+    <div class="section">
+        <h2>4. Conditions for Equivalence</h2>
+        <p>MAP estimates are equal to Ridge Regression estimates under the following conditions:</p>
+        
+        <h3>4.1 Likelihood</h3>
+        <p>The likelihood is Gaussian:</p>
+        <div class="equation">
+            \[
+            P(y|\beta) \propto \exp\left(-\frac{1}{2\sigma^2}\|y - X\beta\|^2\right)
+            \]
+        </div>
+        <p>This assumes that the errors are normally distributed with variance σ².</p>
+
+        <h3>4.2 Prior</h3>
+        <p>The prior on β is also Gaussian:</p>
+        <div class="equation">
+            \[
+            P(\beta) \propto \exp\left(-\frac{\lambda}{2\sigma^2}\|\beta\|^2\right)
+            \]
+        </div>
+        <p>This is equivalent to assuming β ~ N(0, σ²/λ · I).</p>
+
+        <h3>4.3 Relationship between λ and prior variance</h3>
+        <p>The regularization parameter λ in Ridge Regression corresponds to the ratio of error variance to prior variance in the Bayesian setting:</p>
+        <div class="equation">
+            \[
+            \lambda = \frac{\sigma^2}{\tau^2}
+            \]
+        </div>
+        <p>where τ² is the variance of the prior distribution on β.</p>
+    </div>
+
+    <div class="section">
+        <h2>5. Proof of Equivalence</h2>
+        <p>Under these conditions, the posterior distribution is:</p>
+        <div class="equation">
+            \[
+            P(\beta|y) \propto \exp\left(-\frac{1}{2\sigma^2}(\|y - X\beta\|^2 + \lambda\|\beta\|^2)\right)
+            \]
+        </div>
+        <p>The MAP estimate maximizes this posterior, which is equivalent to minimizing:</p>
+        <div class="equation">
+            \[
+            \|y - X\beta\|^2 + \lambda\|\beta\|^2
+            \]
+        </div>
+        <p>This is exactly the Ridge Regression objective function.</p>
+    </div>
+
+    <div class="section">
+        <h2>6. Implications and Interpretations</h2>
+        <ul>
+            <li>Ridge Regression can be interpreted as a Bayesian point estimate with a specific Gaussian prior on the coefficients.</li>
+            <li>The regularization in Ridge Regression is equivalent to imposing a prior belief that the coefficients are centered around zero.</li>
+            <li>The strength of regularization (λ) in Ridge Regression corresponds to the precision of the prior in the Bayesian setting.</li>
+            <li>This equivalence provides a Bayesian justification for Ridge Regression and allows for Bayesian interpretation of its results.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>7. Limitations</h2>
+        <ul>
+            <li>The equivalence holds only for Gaussian likelihoods and priors.</li>
+            <li>In practice, the error variance σ² is often unknown and needs to be estimated, which can complicate the exact equivalence.</li>
+            <li>The assumption of a zero-centered Gaussian prior may not always be appropriate for all problems.</li>
+        </ul>
+    </div>
+</body>
+</html>
