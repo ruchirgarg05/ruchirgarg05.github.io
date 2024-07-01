@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof: Residuals Sum to Zero and Orthogonality of Residuals</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proof: Residuals Sum to Zero and Orthogonality of Residuals</h1>
+
+    <div class="section">
+        <h2>1. Proof that Residuals Sum to Zero</h2>
+        
+        <h3>Method 1: Using Partial Derivatives (Image 1)</h3>
+        <p>In multiple linear regression with an intercept:</p>
+        <div class="equation">
+            \[
+            \hat{y}_i = \beta_0 + \beta_1x_{i,1} + \beta_2x_{i,2} + ... + \beta_px_{i,p}
+            \]
+        </div>
+        <p>The sum of squared errors (SSE) is minimized:</p>
+        <div class="equation">
+            \[
+            SSE = \sum_{i=1}^n (e_i)^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \sum_{i=1}^n (y_i - \beta_0 - \beta_1x_{i,1} - \beta_2x_{i,2} - ... - \beta_px_{i,p})^2
+            \]
+        </div>
+        <p>Taking the partial derivative of SSE with respect to β₀ and setting it to zero:</p>
+        <div class="equation">
+            \[
+            \frac{\partial SSE}{\partial \beta_0} = \sum_{i=1}^n 2(y_i - \beta_0 - \beta_1x_{i,1} - \beta_2x_{i,2} - ... - \beta_px_{i,p})(-1) = -2\sum_{i=1}^n e_i = 0
+            \]
+        </div>
+        <p>This implies:</p>
+        <div class="equation">
+            \[
+            \sum_{i=1}^n e_i = 0
+            \]
+        </div>
+
+        <h3>Method 2: Using Normal Equations (Image 2)</h3>
+        <p>The normal equations for OLS are:</p>
+        <div class="equation">
+            \[
+            X'(y - X\beta) = 0
+            \]
+        </div>
+        <p>The term (y - Xβ) is the residual vector e. Including a vector of ones in X for the intercept leads to:</p>
+        <div class="equation">
+            \[
+            1'e = 0 \implies \sum_{i=1}^n e_i = 0
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Generalized Proof that Residuals are in the Orthogonal Space</h2>
+        
+        <p>To prove that residuals are in the orthogonal space of X, we need to show that they are orthogonal to all columns of X.</p>
+        
+        <p>1. Start with the normal equations:</p>
+        <div class="equation">
+            \[
+            X'(y - X\hat{\beta}) = 0
+            \]
+        </div>
+        
+        <p>2. Recognize that (y - X𝛃̂) is the residual vector e:</p>
+        <div class="equation">
+            \[
+            X'e = 0
+            \]
+        </div>
+        
+        <p>3. This equation means that e is orthogonal to every column of X, as the dot product of e with each column of X is zero.</p>
+        
+        <p>4. In geometric terms, this means that the residual vector e is perpendicular to the subspace spanned by the columns of X.</p>
+        
+        <p>5. Therefore, e lies in the orthogonal complement of the column space of X.</p>
+
+        <p>This orthogonality property has important implications:</p>
+        <ul>
+            <li>It ensures that the residuals contain no linear information from the predictors that could improve the fit.</li>
+            <li>It's a key property in the decomposition of total sum of squares in regression analysis.</li>
+            <li>It's crucial for the efficiency of the OLS estimator under the Gauss-Markov assumptions.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Conclusion</h2>
+        <p>These proofs demonstrate that:</p>
+        <ol>
+            <li>The sum of residuals in a linear regression with an intercept is always zero.</li>
+            <li>The residuals are orthogonal to all predictor variables, including the intercept.</li>
+        </ol>
+        <p>These properties are fundamental to understanding the behavior of linear regression models and are crucial for various model diagnostics and inferential procedures.</p>
+    </div>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APPENDIX: Derivation of Normal Equations and Residual Properties in Linear Regression</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Derivation of Normal Equations and Residual Properties in Linear Regression</h1>
+
+    <div class="section">
+        <h2>1. Derivation of the Normal Equations</h2>
+        
+        <p>Let's start with the linear regression model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>where y is the n×1 vector of responses, X is the n×p matrix of predictors (including a column of ones for the intercept), β is the p×1 vector of coefficients, and ε is the n×1 vector of errors.</p>
+        
+        <p>The goal is to find β̂ that minimizes the sum of squared residuals:</p>
+        <div class="equation">
+            \[
+            SSR = (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})
+            \]
+        </div>
+        
+        <p>Steps to derive the normal equations:</p>
+        
+        <ol>
+            <li>Expand the SSR expression:
+                <div class="equation">
+                    \[
+                    SSR = \mathbf{y}^T\mathbf{y} - \mathbf{y}^T\mathbf{X}\boldsymbol{\beta} - \boldsymbol{\beta}^T\mathbf{X}^T\mathbf{y} + \boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
+                    \]
+                </div>
+            </li>
+            
+            <li>Take the derivative with respect to β:
+                <div class="equation">
+                    \[
+                    \frac{\partial SSR}{\partial \boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}
+                    \]
+                </div>
+            </li>
+            
+            <li>Set the derivative to zero to find the minimum:
+                <div class="equation">
+                    \[
+                    -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = 0
+                    \]
+                </div>
+            </li>
+            
+            <li>Simplify to get the normal equations:
+                <div class="equation">
+                    \[
+                    \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{y}
+                    \]
+                </div>
+            </li>
+        </ol>
+        
+        <p>Solving for β gives us the OLS estimator:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Proof that Residuals Sum to Zero</h2>
+        
+        <p>Now that we have derived the normal equations, we can prove that the residuals sum to zero when an intercept is included:</p>
+        
+        <ol>
+            <li>Recall the normal equations:
+                <div class="equation">
+                    \[
+                    \mathbf{X}^T\mathbf{X}\hat{\boldsymbol{\beta}} = \mathbf{X}^T\mathbf{y}
+                    \]
+                </div>
+            </li>
+            
+            <li>Subtract X'X𝛃̂ from both sides:
+                <div class="equation">
+                    \[
+                    \mathbf{X}^T(\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}}) = 0
+                    \]
+                </div>
+            </li>
+            
+            <li>Recognize that (y - X𝛃̂) is the residual vector e:
+                <div class="equation">
+                    \[
+                    \mathbf{X}^T\mathbf{e} = 0
+                    \]
+                </div>
+            </li>
+            
+            <li>If X includes a column of ones for the intercept, the first equation in this system is:
+                <div class="equation">
+                    \[
+                    [1, 1, ..., 1] \begin{bmatrix} e_1 \\ e_2 \\ \vdots \\ e_n \end{bmatrix} = 0
+                    \]
+                </div>
+            </li>
+            
+            <li>This simplifies to:
+                <div class="equation">
+                    \[
+                    \sum_{i=1}^n e_i = 0
+                    \]
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. Orthogonality of Residuals</h2>
+        
+        <p>The normal equations X'e = 0 also prove that the residuals are orthogonal to all columns of X:</p>
+        
+        <ul>
+            <li>Each column of X, when dotted with e, gives zero.</li>
+            <li>This means e is perpendicular to the space spanned by the columns of X.</li>
+            <li>Therefore, e lies in the orthogonal complement of the column space of X.</li>
+        </ul>
+        
+        <p>This orthogonality has important implications:</p>
+        <ul>
+            <li>It ensures that no linear combination of the predictors can explain any part of the residuals.</li>
+            <li>It's fundamental to the decomposition of variance in ANOVA.</li>
+            <li>It's crucial for the optimality properties of OLS under the Gauss-Markov assumptions.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
