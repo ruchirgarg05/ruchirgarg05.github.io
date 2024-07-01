@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of Normality of OLS Estimator Distribution</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+        }
+        .theorem {
+            font-style: italic;
+            margin: 1em 0;
+        }
+        .proof {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proof of Normality of OLS Estimator Distribution</h1>
+
+    <div class="theorem">
+        <strong>Theorem:</strong> Given a linear regression model with normally distributed errors, the Ordinary Least Squares (OLS) estimator follows a normal distribution.
+    </div>
+
+    <div class="proof">
+        <strong>Proof:</strong>
+        <p>
+            Consider the linear regression model:
+        </p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>
+            where \(\mathbf{y}\) is an \(n \times 1\) vector of observations, \(\mathbf{X}\) is an \(n \times p\) matrix of predictors, \(\boldsymbol{\beta}\) is a \(p \times 1\) vector of coefficients, and \(\boldsymbol{\varepsilon}\) is an \(n \times 1\) vector of errors.
+        </p>
+        <p>
+            Assume \(\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I})\).
+        </p>
+        <p>
+            The OLS estimator is given by:
+        </p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}
+            \]
+        </div>
+        <p>
+            Substituting the model equation:
+        </p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \hat{\boldsymbol{\beta}} &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}) \\
+            &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}\boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \\
+            &= \boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}
+            \end{aligned}
+            \]
+        </div>
+        <p>
+            The term \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}\) is a linear combination of the elements of \(\boldsymbol{\varepsilon}\), which are normally distributed. By the properties of multivariate normal distributions, any linear combination of normally distributed variables is also normally distributed.
+        </p>
+        <p>
+            We can characterize this distribution:
+        </p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}[\boldsymbol{\varepsilon}] = \mathbf{0} \\
+            \text{Var}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\text{Var}(\boldsymbol{\varepsilon})\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+            &= \sigma^2(\mathbf{X}'\mathbf{X})^{-1}
+            \end{aligned}
+            \]
+        </div>
+        <p>
+            Thus, \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2(\mathbf{X}'\mathbf{X})^{-1})\)
+        </p>
+        <p>
+            Therefore, \(\hat{\boldsymbol{\beta}}\) is the sum of a constant vector \(\boldsymbol{\beta}\) and a normally distributed random vector. By the properties of normal distributions, this results in a normally distributed random vector with a shifted mean.
+        </p>
+        <p>
+            <strong>Conclusion:</strong> The OLS estimator \(\hat{\boldsymbol{\beta}}\) follows a multivariate normal distribution:
+        </p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} \sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}'\mathbf{X})^{-1})
+            \]
+        </div>
+        <p>
+            This result shows that the OLS estimator \(\hat{\boldsymbol{\beta}}\) is normally distributed around the true parameter \(\boldsymbol{\beta}\), with a variance-covariance matrix \(\sigma^2(\mathbf{X}'\mathbf{X})^{-1}\), given that the errors are normally distributed.
+        </p>
+    </div>
+</body>
+</html>
