@@ -1,5 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weighted Least Squares (WLS) and White's Standard Errors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weighted Least Squares (WLS) and White's Standard Errors</h1>
+
+    <div class="section">
+        <h2>1. Weighted Least Squares (WLS)</h2>
+        
+        <p>Weighted Least Squares is a generalization of Ordinary Least Squares (OLS) that can be used when the standard assumptions of constant variance (homoscedasticity) in the errors do not hold.</p>
+
+        <h3>Key Idea:</h3>
+        <p>In WLS, we give each observation a weight that is inversely proportional to its variance. Observations with higher variance (less reliable) are given lower weight, while observations with lower variance (more reliable) are given higher weight.</p>
+
+        <h3>Mathematical Formulation:</h3>
+        <p>Consider the linear model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>where \(\text{Var}(\boldsymbol{\varepsilon}) = \boldsymbol{\Omega} = \text{diag}(\sigma_1^2, \sigma_2^2, \ldots, \sigma_n^2)\)</p>
+
+        <p>The WLS estimator is given by:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}}_{WLS} = (\mathbf{X}'\mathbf{W}\mathbf{X})^{-1}\mathbf{X}'\mathbf{W}\mathbf{y}
+            \]
+        </div>
+        <p>where \(\mathbf{W} = \boldsymbol{\Omega}^{-1} = \text{diag}(1/\sigma_1^2, 1/\sigma_2^2, \ldots, 1/\sigma_n^2)\)</p>
+
+        <h3>Properties:</h3>
+        <ol>
+            <li>WLS is the Best Linear Unbiased Estimator (BLUE) when the weights are correctly specified.</li>
+            <li>The variance of the WLS estimator is: \(\text{Var}(\hat{\boldsymbol{\beta}}_{WLS}) = (\mathbf{X}'\mathbf{W}\mathbf{X})^{-1}\)</li>
+            <li>WLS can be seen as transforming the original model to achieve homoscedasticity.</li>
+        </ol>
+
+        <h3>Challenges:</h3>
+        <p>The main challenge in applying WLS is knowing the correct weights. In practice, these often need to be estimated, which can introduce additional uncertainty.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. White's Standard Errors</h2>
+        
+        <p>White's standard errors, also known as heteroscedasticity-consistent (HC) standard errors, were introduced by Halbert White in 1980. They provide a way to obtain consistent estimates of standard errors when heteroscedasticity is present, without having to specify the form of the heteroscedasticity.</p>
+
+        <h3>Key Idea:</h3>
+        <p>Instead of trying to model the heteroscedasticity explicitly (as in WLS), White's approach uses the observed residuals to estimate the variance of the OLS estimator under heteroscedasticity.</p>
+
+        <h3>Mathematical Formulation:</h3>
+        <p>The variance-covariance matrix of the OLS estimator under heteroscedasticity is:</p>
+        <div class="equation">
+            \[
+            \text{Var}(\hat{\boldsymbol{\beta}}_{OLS}) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\Omega}\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}
+            \]
+        </div>
+
+        <p>White's estimator replaces \(\boldsymbol{\Omega}\) with a diagonal matrix of squared OLS residuals:</p>
+        <div class="equation">
+            \[
+            \widehat{\text{Var}}(\hat{\boldsymbol{\beta}}_{OLS}) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\text{diag}(\hat{\varepsilon}_1^2, \hat{\varepsilon}_2^2, \ldots, \hat{\varepsilon}_n^2)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}
+            \]
+        </div>
+        <p>where \(\hat{\varepsilon}_i\) are the OLS residuals.</p>
+
+        <h3>Properties:</h3>
+        <ol>
+            <li>White's standard errors are consistent even under heteroscedasticity of unknown form.</li>
+            <li>They allow for valid inference (t-tests, confidence intervals) in the presence of heteroscedasticity.</li>
+            <li>They are widely implemented in statistical software packages.</li>
+        </ol>
+
+        <h3>Limitations:</h3>
+        <ol>
+            <li>In small samples, White's standard errors can be biased downwards.</li>
+            <li>They may be less efficient than correctly specified WLS if the true form of heteroscedasticity is known.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Comparison: WLS vs. White's Standard Errors</h2>
+        <ul>
+            <li><strong>Efficiency:</strong> WLS is more efficient if the correct weights are known. White's approach is more robust but potentially less efficient.</li>
+            <li><strong>Ease of Use:</strong> White's standard errors are easier to implement as they don't require specifying a weighting scheme.</li>
+            <li><strong>Assumptions:</strong> WLS requires assumptions about the form of heteroscedasticity. White's approach is agnostic about the form.</li>
+            <li><strong>Estimation:</strong> WLS changes the point estimates. White's approach only affects the standard errors.</li>
+        </ul>
+    </div>
+</body>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
