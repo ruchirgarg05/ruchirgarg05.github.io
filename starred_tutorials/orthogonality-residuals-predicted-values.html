@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proof: Orthogonality of Residuals and Predicted Values in Linear Regression</title>
+    <title>Matrix Proof: Orthogonality of Residuals and Centered Predicted Values</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
     <style>
         body {
@@ -31,39 +31,34 @@
     </style>
 </head>
 <body>
-    <h1>Proof: Orthogonality of Residuals and Predicted Values in Linear Regression</h1>
+    <h1>Matrix Proof: Orthogonality of Residuals and Centered Predicted Values</h1>
 
     <div class="section">
-        <h2>1. Introduction</h2>
-        <p>We will prove that in linear regression, the residuals (y - ŷ) are orthogonal to the predicted values (ŷ - ȳ). Mathematically, we need to show that:</p>
-        <div class="equation">
-            \[
-            \sum (y_i - \hat{y}_i)(\hat{y}_i - \bar{y}) = 0
-            \]
-        </div>
-        <p>This property is crucial in regression analysis and underlies many important results.</p>
+        <h2>1. Setup and Definitions</h2>
+        <p>Let's define our matrices and vectors:</p>
+        <ul>
+            <li>y: n × 1 vector of observed values</li>
+            <li>ŷ: n × 1 vector of predicted values</li>
+            <li>e: n × 1 vector of residuals (e = y - ŷ)</li>
+            <li>1: n × 1 vector of ones</li>
+            <li>I: n × n identity matrix</li>
+            <li>H: n × n hat matrix (H = X(X'X)⁻¹X')</li>
+            <li>ȳ: scalar, mean of y</li>
+        </ul>
     </div>
 
     <div class="section">
-        <h2>2. Setup and Definitions</h2>
-        <ul>
-            <li>y_i: observed values</li>
-            <li>ŷ_i: predicted values</li>
-            <li>ȳ: mean of observed values</li>
-            <li>x_i: predictor values</li>
-            <li>x̄: mean of predictor values</li>
-            <li>β̂₀, β̂₁: estimated regression coefficients</li>
-        </ul>
-        <p>In simple linear regression, we have:</p>
+        <h2>2. Theorem to Prove</h2>
+        <p>We want to prove:</p>
         <div class="equation">
             \[
-            \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i
+            \sum_{i=1}^n (y_i - \hat{y}_i)(\hat{y}_i - \bar{y}) = 0
             \]
         </div>
-        <p>And the line passes through (x̄, ȳ), so:</p>
+        <p>In matrix notation, this is equivalent to:</p>
         <div class="equation">
             \[
-            \bar{y} = \hat{\beta}_0 + \hat{\beta}_1 \bar{x}
+            \mathbf{e}'(\hat{\mathbf{y}} - \bar{y}\mathbf{1}) = 0
             \]
         </div>
     </div>
@@ -71,76 +66,67 @@
     <div class="section">
         <h2>3. Proof</h2>
         
-        <h3>Step 1: Express the sum in terms of regression coefficients</h3>
+        <h3>Step 1: Express e and ŷ in terms of y and H</h3>
         <div class="equation">
             \[
             \begin{aligned}
-            \sum (y_i - \hat{y}_i)(\hat{y}_i - \bar{y}) &= \sum (y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))((\hat{\beta}_0 + \hat{\beta}_1 x_i) - (\hat{\beta}_0 + \hat{\beta}_1 \bar{x})) \\
-            &= \sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)(\hat{\beta}_1 x_i - \hat{\beta}_1 \bar{x}) \\
-            &= \hat{\beta}_1 \sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)(x_i - \bar{x})
+            \mathbf{e} &= \mathbf{y} - \hat{\mathbf{y}} = (\mathbf{I} - \mathbf{H})\mathbf{y} \\
+            \hat{\mathbf{y}} &= \mathbf{H}\mathbf{y}
             \end{aligned}
             \]
         </div>
 
-        <h3>Step 2: Use the normal equations</h3>
-        <p>Recall that in OLS, the normal equations give us:</p>
+        <h3>Step 2: Express ȳ in terms of y</h3>
         <div class="equation">
             \[
-            \sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i) = 0
-            \]
-        </div>
-        <div class="equation">
-            \[
-            \sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)x_i = 0
+            \bar{y} = \frac{1}{n}\mathbf{1}'\mathbf{y}
             \]
         </div>
 
-        <h3>Step 3: Expand the sum</h3>
+        <h3>Step 3: Substitute into the expression we want to prove</h3>
         <div class="equation">
             \[
             \begin{aligned}
-            \hat{\beta}_1 \sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)(x_i - \bar{x}) &= \hat{\beta}_1 [\sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)x_i - \bar{x}\sum (y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i)] \\
-            &= \hat{\beta}_1 [0 - \bar{x} \cdot 0] \quad \text{(using the normal equations)} \\
-            &= 0
+            \mathbf{e}'(\hat{\mathbf{y}} - \bar{y}\mathbf{1}) &= [(\mathbf{I} - \mathbf{H})\mathbf{y}]'[\mathbf{H}\mathbf{y} - \frac{1}{n}\mathbf{1}'\mathbf{y}\mathbf{1}] \\
+            &= \mathbf{y}'(\mathbf{I} - \mathbf{H})[\mathbf{H} - \frac{1}{n}\mathbf{1}\mathbf{1}']\mathbf{y}
             \end{aligned}
             \]
         </div>
-    </div>
 
-    <div class="section">
-        <h2>4. Geometric Interpretation</h2>
-        <p>Geometrically, this result means that the vector of residuals is perpendicular to the vector of predicted values (when both are centered around their means). This can be visualized as follows:</p>
-        <div class="equation">
-            <svg width="300" height="300" viewBox="-10 -10 320 320">
-                <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-                    refX="0" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" />
-                    </marker>
-                </defs>
-                <line x1="0" y1="300" x2="300" y2="0" stroke="blue" stroke-width="2"/>
-                <line x1="150" y1="150" x2="250" y2="50" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <line x1="150" y1="150" x2="50" y2="250" stroke="green" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <text x="260" y="40" fill="red">Predicted Values</text>
-                <text x="40" y="270" fill="green">Residuals</text>
-                <text x="280" y="280" fill="blue">Regression Line</text>
-            </svg>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>5. Implications and Importance</h2>
+        <h3>Step 4: Use properties of H and 1</h3>
+        <p>Key properties:</p>
         <ul>
-            <li><strong>Decomposition of Variance:</strong> This property allows for the clean decomposition of total sum of squares into explained and residual sum of squares.</li>
-            <li><strong>Efficiency of OLS:</strong> It ensures that OLS estimates have minimum variance among linear unbiased estimators (Gauss-Markov theorem).</li>
-            <li><strong>Model Diagnostics:</strong> It's a key assumption in many diagnostic procedures, such as residual plots.</li>
-            <li><strong>Intuitive Understanding:</strong> It means that the residuals contain no linear information about the predictors that could improve the fit.</li>
+            <li>H is idempotent: H² = H</li>
+            <li>H is symmetric: H' = H</li>
+            <li>H1 = 1 (the regression includes an intercept)</li>
+            <li>(I - H)1 = 0 (consequence of H1 = 1)</li>
+        </ul>
+        
+        <h3>Step 5: Simplify the expression</h3>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \mathbf{y}'(\mathbf{I} - \mathbf{H})[\mathbf{H} - \frac{1}{n}\mathbf{1}\mathbf{1}']\mathbf{y} &= \mathbf{y}'[\mathbf{H} - \mathbf{H}^2 - \frac{1}{n}(\mathbf{I} - \mathbf{H})\mathbf{1}\mathbf{1}']\mathbf{y} \\
+            &= \mathbf{y}'[\mathbf{H} - \mathbf{H} - \frac{1}{n}(\mathbf{0})\mathbf{1}']\mathbf{y} \\
+            &= \mathbf{y}'\mathbf{0}\mathbf{y} = 0
+            \end{aligned}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Interpretation and Implications</h2>
+        <ul>
+            <li><strong>Geometric Interpretation:</strong> The residuals are orthogonal to the centered predicted values.</li>
+            <li><strong>Regression Through the Mean:</strong> This property ensures that the regression line passes through the point (x̄, ȳ).</li>
+            <li><strong>Partitioning of Sums of Squares:</strong> This orthogonality allows for the clean decomposition of total sum of squares into explained and residual sum of squares.</li>
+            <li><strong>Efficiency of OLS:</strong> It's a key property in proving that OLS estimators are BLUE (Best Linear Unbiased Estimators).</li>
         </ul>
     </div>
 
     <div class="section">
-        <h2>6. Conclusion</h2>
-        <p>We have proven that Σ(y - ŷ)(ŷ - ȳ) = 0, demonstrating the orthogonality of residuals and predicted values in linear regression. This fundamental property underpins many theoretical results in regression analysis and provides insights into the nature of least squares estimation.</p>
+        <h2>5. Conclusion</h2>
+        <p>We have proven that Σ(yᵢ - ŷᵢ)(ŷᵢ - ȳ) = 0 using matrix notation. This proof demonstrates the orthogonality of residuals to centered predicted values, which is a fundamental property in regression analysis. It underlies many important results in linear regression theory and provides insights into the nature of least squares estimation.</p>
     </div>
 </body>
 </html>
