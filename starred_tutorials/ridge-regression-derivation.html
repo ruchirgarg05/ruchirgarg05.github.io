@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derivation of Ridge Regression Estimator, Bias, and Variance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Derivation of Ridge Regression Estimator, Bias, and Variance</h1>
+
+    <div class="section">
+        <h2>1. Derivation of Ridge Regression Estimator</h2>
+        <p>Ridge regression minimizes the penalized sum of squared residuals:</p>
+        <div class="equation">
+            \[
+            L(\beta) = (y - X\beta)'(y - X\beta) + \lambda \beta'\beta
+            \]
+        </div>
+        <p>where λ > 0 is the regularization parameter.</p>
+        
+        <ol>
+            <li>Expand the expression:
+                <div class="equation">
+                    \[
+                    L(\beta) = y'y - 2\beta'X'y + \beta'X'X\beta + \lambda \beta'\beta
+                    \]
+                </div>
+            </li>
+            <li>Take the derivative with respect to β:
+                <div class="equation">
+                    \[
+                    \frac{\partial L}{\partial \beta} = -2X'y + 2X'X\beta + 2\lambda \beta
+                    \]
+                </div>
+            </li>
+            <li>Set the derivative to zero and solve:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    -2X'y + 2X'X\beta + 2\lambda \beta &= 0 \\
+                    (X'X + \lambda I)\beta &= X'y \\
+                    \beta &= (X'X + \lambda I)^{-1}X'y
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+        </ol>
+        
+        <p>Therefore, the Ridge regression estimator is:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_{Ridge} = (X'X + \lambda I)^{-1}X'y
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Bias of Ridge Regression Estimator</h2>
+        <p>To derive the bias, we start with the true model: y = Xβ + ε, where E[ε] = 0</p>
+        
+        <ol>
+            <li>Express 𝛃̂_Ridge in terms of β:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    \hat{\beta}_{Ridge} &= (X'X + \lambda I)^{-1}X'y \\
+                    &= (X'X + \lambda I)^{-1}X'(X\beta + \varepsilon) \\
+                    &= (X'X + \lambda I)^{-1}X'X\beta + (X'X + \lambda I)^{-1}X'\varepsilon
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+            <li>Take the expectation:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    E[\hat{\beta}_{Ridge}] &= E[(X'X + \lambda I)^{-1}X'X\beta + (X'X + \lambda I)^{-1}X'\varepsilon] \\
+                    &= (X'X + \lambda I)^{-1}X'X\beta + (X'X + \lambda I)^{-1}X'E[\varepsilon] \\
+                    &= (X'X + \lambda I)^{-1}X'X\beta
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+            <li>Calculate the bias:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    Bias(\hat{\beta}_{Ridge}) &= E[\hat{\beta}_{Ridge}] - \beta \\
+                    &= (X'X + \lambda I)^{-1}X'X\beta - \beta \\
+                    &= [(X'X + \lambda I)^{-1}X'X - I]\beta \\
+                    &= [(X'X + \lambda I)^{-1}(X'X + \lambda I - \lambda I) - I]\beta \\
+                    &= [I - \lambda(X'X + \lambda I)^{-1} - I]\beta \\
+                    &= -\lambda(X'X + \lambda I)^{-1}\beta
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. Variance of Ridge Regression Estimator</h2>
+        <p>To derive the variance, we use the fact that Var(y) = σ²I, where σ² is the error variance.</p>
+        
+        <ol>
+            <li>Start with the expression for 𝛃̂_Ridge:
+                <div class="equation">
+                    \[
+                    \hat{\beta}_{Ridge} = (X'X + \lambda I)^{-1}X'y
+                    \]
+                </div>
+            </li>
+            <li>Apply the variance operator:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    Var(\hat{\beta}_{Ridge}) &= Var((X'X + \lambda I)^{-1}X'y) \\
+                    &= (X'X + \lambda I)^{-1}X' Var(y) X(X'X + \lambda I)^{-1} \\
+                    &= \sigma^2 (X'X + \lambda I)^{-1}X'X(X'X + \lambda I)^{-1}
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>4. Comparison with OLS</h2>
+        <p>For comparison, recall the OLS estimator:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_{OLS} = (X'X)^{-1}X'y
+            \]
+        </div>
+        <p>OLS Properties:</p>
+        <ul>
+            <li>Bias(𝛃̂_OLS) = 0</li>
+            <li>Var(𝛃̂_OLS) = σ²(X'X)⁻¹</li>
+        </ul>
+        <p>Key differences:</p>
+        <ul>
+            <li>Ridge regression introduces a bias, which increases with λ.</li>
+            <li>The variance of the Ridge estimator is generally smaller than that of OLS.</li>
+            <li>As λ → 0, the Ridge estimator approaches the OLS estimator.</li>
+            <li>As λ → ∞, the Ridge estimator approaches zero, maximizing bias but minimizing variance.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. Mean Squared Error (MSE)</h2>
+        <p>The MSE combines both bias and variance:</p>
+        <div class="equation">
+            \[
+            MSE(\hat{\beta}_{Ridge}) = \|Bias(\hat{\beta}_{Ridge})\|^2 + tr(Var(\hat{\beta}_{Ridge}))
+            \]
+        </div>
+        <p>Ridge regression can achieve a lower MSE than OLS when the reduction in variance outweighs the introduced bias squared.</p>
+    </div>
+</body>
+</html>
