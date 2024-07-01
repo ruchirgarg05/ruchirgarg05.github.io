@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lasso Regression as a Bayesian Estimation Problem</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lasso Regression as a Bayesian Estimation Problem</h1>
+
+    <div class="section">
+        <h2>1. Lasso Regression: Frequentist Formulation</h2>
+        <p>Lasso (Least Absolute Shrinkage and Selection Operator) regression minimizes:</p>
+        <div class="equation">
+            \[
+            L(\beta) = \|y - X\beta\|^2 + \lambda \|\beta\|_1
+            \]
+        </div>
+        <p>where ||β||₁ is the L1 norm of β (sum of absolute values of coefficients), and λ > 0 is the regularization parameter.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Bayesian Framework</h2>
+        <p>In Bayesian statistics, we seek the posterior distribution:</p>
+        <div class="equation">
+            \[
+            p(\beta|y) \propto p(y|\beta) \cdot p(\beta)
+            \]
+        </div>
+        <p>where p(y|β) is the likelihood and p(β) is the prior distribution on β.</p>
+    </div>
+
+    <div class="section">
+        <h2>3. Likelihood Function</h2>
+        <p>Assuming Gaussian errors with variance σ², the likelihood is:</p>
+        <div class="equation">
+            \[
+            p(y|\beta) \propto \exp\left(-\frac{1}{2\sigma^2}\|y - X\beta\|^2\right)
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Prior Distribution for Lasso</h2>
+        <p>The prior distribution that leads to Lasso regression is the Laplace (double exponential) distribution:</p>
+        <div class="equation">
+            \[
+            p(\beta) \propto \exp\left(-\frac{\lambda}{\sigma^2}\|\beta\|_1\right)
+            \]
+        </div>
+        <p>This prior has the following properties:</p>
+        <ul>
+            <li>It's peaked at zero, encouraging sparsity in the coefficients.</li>
+            <li>It has heavier tails than a Gaussian distribution, allowing for larger coefficients when supported by the data.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. Posterior Distribution</h2>
+        <p>Combining the likelihood and prior:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            p(\beta|y) &\propto p(y|\beta) \cdot p(\beta) \\
+            &\propto \exp\left(-\frac{1}{2\sigma^2}\|y - X\beta\|^2\right) \cdot \exp\left(-\frac{\lambda}{\sigma^2}\|\beta\|_1\right) \\
+            &\propto \exp\left(-\frac{1}{2\sigma^2}\left(\|y - X\beta\|^2 + 2\lambda\|\beta\|_1\right)\right)
+            \end{aligned}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>6. Maximum A Posteriori (MAP) Estimation</h2>
+        <p>The MAP estimate maximizes the posterior distribution, which is equivalent to minimizing the negative log-posterior:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_{MAP} = \argmin_{\beta} \left\{\|y - X\beta\|^2 + 2\lambda\|\beta\|_1\right\}
+            \]
+        </div>
+        <p>This is exactly the Lasso regression problem, with λ in the Bayesian formulation corresponding to 2λ in the frequentist formulation.</p>
+    </div>
+
+    <div class="section">
+        <h2>7. Interpretation</h2>
+        <ul>
+            <li>The Laplace prior encourages sparsity in the coefficient estimates, leading to feature selection.</li>
+            <li>The regularization parameter λ controls the strength of the prior belief in sparsity.</li>
+            <li>As λ → 0, the prior becomes uninformative, and the MAP estimate approaches the maximum likelihood estimate (OLS).</li>
+            <li>As λ → ∞, the prior dominates, pushing all coefficients towards zero.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>8. Conclusion</h2>
+        <p>Lasso regression can be formulated as a Bayesian estimation problem with a Laplace (double exponential) prior distribution on the coefficients. This Bayesian perspective provides insight into why Lasso tends to produce sparse solutions and how the regularization parameter λ can be interpreted as a prior belief in the sparsity of the model.</p>
+    </div>
+</body>
+</html>
