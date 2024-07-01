@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of MAP and OLS Equivalence with Normal Errors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .theorem, .proof {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proof of MAP and OLS Equivalence with Normal Errors</h1>
+
+    <div class="theorem">
+        <h2>Theorem:</h2>
+        <p>Given a linear regression model with normally distributed errors and assuming a flat (improper) prior on the parameters, the Maximum A Posteriori (MAP) estimate is equivalent to the Ordinary Least Squares (OLS) estimate.</p>
+    </div>
+
+    <div class="proof">
+        <h2>Proof:</h2>
+        
+        <p>Consider the linear regression model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>where \(\mathbf{y}\) is an \(n \times 1\) vector of observations, \(\mathbf{X}\) is an \(n \times p\) matrix of predictors, \(\boldsymbol{\beta}\) is a \(p \times 1\) vector of coefficients, and \(\boldsymbol{\varepsilon}\) is an \(n \times 1\) vector of errors.</p>
+        
+        <p>Assume \(\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I})\).</p>
+        
+        <p>1. The likelihood function is:</p>
+        <div class="equation">
+            \[
+            P(\mathbf{y}|\boldsymbol{\beta}, \mathbf{X}) = (2\pi\sigma^2)^{-n/2} \exp\left(-\frac{1}{2\sigma^2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\right)
+            \]
+        </div>
+        
+        <p>2. Assuming a flat prior \(P(\boldsymbol{\beta}) = \text{constant}\), the posterior is proportional to the likelihood:</p>
+        <div class="equation">
+            \[
+            P(\boldsymbol{\beta}|\mathbf{y}, \mathbf{X}) \propto P(\mathbf{y}|\boldsymbol{\beta}, \mathbf{X})P(\boldsymbol{\beta}) \propto P(\mathbf{y}|\boldsymbol{\beta}, \mathbf{X})
+            \]
+        </div>
+        
+        <p>3. The MAP estimate maximizes the posterior, which is equivalent to maximizing the likelihood. Taking the log:</p>
+        <div class="equation">
+            \[
+            \log P(\mathbf{y}|\boldsymbol{\beta}, \mathbf{X}) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})
+            \]
+        </div>
+        
+        <p>4. Maximizing this is equivalent to minimizing:</p>
+        <div class="equation">
+            \[
+            (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})
+            \]
+        </div>
+        
+        <p>5. This is exactly the OLS objective function. To find the minimum, we differentiate with respect to \(\boldsymbol{\beta}\) and set to zero:</p>
+        <div class="equation">
+            \[
+            \frac{\partial}{\partial\boldsymbol{\beta}}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = -2\mathbf{X}^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{0}
+            \]
+        </div>
+        
+        <p>6. Solving this equation:</p>
+        <div class="equation">
+            \[
+            \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{y}
+            \]
+        </div>
+        
+        <p>7. The solution is the OLS estimator:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+            \]
+        </div>
+        
+        <p><strong>Conclusion:</strong> The MAP estimate with a flat prior on \(\boldsymbol{\beta}\) and normally distributed errors is identical to the OLS estimate. This demonstrates that under these conditions, the Bayesian approach (MAP) and the frequentist approach (OLS) yield the same point estimate for the regression coefficients.</p>
+    </div>
+</body>
+</html>

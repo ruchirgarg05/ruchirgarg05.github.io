@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weighted Least Squares (WLS) and White's Standard Errors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous content remains unchanged -->
+
+    <div class="section">
+        <h2>Appendix: Proof that WLS can be transformed into OLS</h2>
+        
+        <p>This proof demonstrates that a Weighted Least Squares problem can be transformed into an Ordinary Least Squares problem through a simple transformation of variables.</p>
+
+        <h3>Given:</h3>
+        <p>Consider the linear model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>where \(\text{Var}(\boldsymbol{\varepsilon}) = \boldsymbol{\Omega} = \text{diag}(\sigma_1^2, \sigma_2^2, \ldots, \sigma_n^2)\)</p>
+
+        <h3>Proof:</h3>
+        
+        <ol>
+            <li>
+                <p>Define the weight matrix \(\mathbf{W}\) as the inverse of the variance matrix:</p>
+                <div class="equation">
+                    \[
+                    \mathbf{W} = \boldsymbol{\Omega}^{-1} = \text{diag}(1/\sigma_1^2, 1/\sigma_2^2, \ldots, 1/\sigma_n^2)
+                    \]
+                </div>
+            </li>
+
+            <li>
+                <p>Define a transformation matrix \(\mathbf{P}\) such that \(\mathbf{P}'\mathbf{P} = \mathbf{W}\). We can choose \(\mathbf{P}\) as:</p>
+                <div class="equation">
+                    \[
+                    \mathbf{P} = \text{diag}(1/\sigma_1, 1/\sigma_2, \ldots, 1/\sigma_n)
+                    \]
+                </div>
+            </li>
+
+            <li>
+                <p>Transform the original model by pre-multiplying both sides by \(\mathbf{P}\):</p>
+                <div class="equation">
+                    \[
+                    \mathbf{P}\mathbf{y} = \mathbf{P}\mathbf{X}\boldsymbol{\beta} + \mathbf{P}\boldsymbol{\varepsilon}
+                    \]
+                </div>
+            </li>
+
+            <li>
+                <p>Define new variables:</p>
+                <div class="equation">
+                    \[
+                    \mathbf{y}^* = \mathbf{P}\mathbf{y}, \quad \mathbf{X}^* = \mathbf{P}\mathbf{X}, \quad \boldsymbol{\varepsilon}^* = \mathbf{P}\boldsymbol{\varepsilon}
+                    \]
+                </div>
+            </li>
+
+            <li>
+                <p>The transformed model is now:</p>
+                <div class="equation">
+                    \[
+                    \mathbf{y}^* = \mathbf{X}^*\boldsymbol{\beta} + \boldsymbol{\varepsilon}^*
+                    \]
+                </div>
+            </li>
+
+            <li>
+                <p>Check the variance of the transformed error term:</p>
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    \text{Var}(\boldsymbol{\varepsilon}^*) &= \text{Var}(\mathbf{P}\boldsymbol{\varepsilon}) \\
+                    &= \mathbf{P}\text{Var}(\boldsymbol{\varepsilon})\mathbf{P}' \\
+                    &= \mathbf{P}\boldsymbol{\Omega}\mathbf{P}' \\
+                    &= \mathbf{P}\mathbf{W}^{-1}\mathbf{P}' \\
+                    &= \mathbf{P}(\mathbf{P}'\mathbf{P})^{-1}\mathbf{P}' \\
+                    &= \mathbf{P}\mathbf{P}^{-1}(\mathbf{P}')^{-1}\mathbf{P}' \\
+                    &= \mathbf{I}
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+
+            <li>
+                <p>The transformed model now has homoscedastic errors (constant variance).</p>
+            </li>
+
+            <li>
+                <p>Apply OLS to the transformed model:</p>
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    \hat{\boldsymbol{\beta}}_{OLS} &= (\mathbf{X}^{*'}\mathbf{X}^*)^{-1}\mathbf{X}^{*'}\mathbf{y}^* \\
+                    &= ((\mathbf{P}\mathbf{X})'(\mathbf{P}\mathbf{X}))^{-1}(\mathbf{P}\mathbf{X})'\mathbf{P}\mathbf{y} \\
+                    &= (\mathbf{X}'\mathbf{P}'\mathbf{P}\mathbf{X})^{-1}\mathbf{X}'\mathbf{P}'\mathbf{P}\mathbf{y} \\
+                    &= (\mathbf{X}'\mathbf{W}\mathbf{X})^{-1}\mathbf{X}'\mathbf{W}\mathbf{y}
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+
+            <li>
+                <p>This final expression is identical to the WLS estimator.</p>
+            </li>
+        </ol>
+
+        <h3>Conclusion:</h3>
+        <p>We have shown that by applying an appropriate transformation, a WLS problem can be converted into an OLS problem. The OLS estimator of the transformed model is identical to the WLS estimator of the original model. This proof demonstrates why WLS is the Best Linear Unbiased Estimator (BLUE) when the weights are correctly specified, as it reduces to OLS in a transformed space where the Gauss-Markov assumptions hold.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidence Intervals for Regression Coefficients</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Confidence Intervals for Regression Coefficients</h1>
+
+    <div class="section">
+        <h2>1. Introduction</h2>
+        <p>In regression analysis, confidence intervals provide a range of plausible values for the true population parameters, given the observed data. We'll focus on the 95% confidence interval for the OLS estimator.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Formula for 95% Confidence Interval</h2>
+        <p>For a given coefficient \(\beta_j\), the 95% confidence interval is given by:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_j \pm t_{n-k,0.975} \cdot SE(\hat{\beta}_j)
+            \]
+        </div>
+        <p>Where:</p>
+        <ul>
+            <li>\(\hat{\beta}_j\) is the OLS estimate of the j-th coefficient</li>
+            <li>\(t_{n-k,0.975}\) is the 97.5th percentile of the t-distribution with n-k degrees of freedom</li>
+            <li>n is the number of observations</li>
+            <li>k is the number of predictors (including the intercept)</li>
+            <li>\(SE(\hat{\beta}_j)\) is the standard error of \(\hat{\beta}_j\)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Calculating the Standard Error</h2>
+        <p>The standard error for \(\hat{\beta}_j\) is given by:</p>
+        <div class="equation">
+            \[
+            SE(\hat{\beta}_j) = \sqrt{\hat{\sigma}^2 \cdot [(X'X)^{-1}]_{jj}}
+            \]
+        </div>
+        <p>Where:</p>
+        <ul>
+            <li>\(\hat{\sigma}^2\) is the estimate of the error variance: \(\hat{\sigma}^2 = \frac{RSS}{n-k}\)</li>
+            <li>RSS is the Residual Sum of Squares</li>
+            <li>\([(X'X)^{-1}]_{jj}\) is the j-th diagonal element of \((X'X)^{-1}\)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Interpretation</h2>
+        <p>A 95% confidence interval means that if we were to repeat the sampling process many times and calculate the confidence interval each time, about 95% of these intervals would contain the true population parameter.</p>
+        <p>For a given sample:</p>
+        <ul>
+            <li>If the interval doesn't contain 0, we can conclude that the coefficient is statistically significant at the 5% level.</li>
+            <li>The width of the interval provides information about the precision of the estimate. Narrower intervals indicate more precise estimates.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. Assumptions</h2>
+        <p>The validity of these confidence intervals relies on several assumptions:</p>
+        <ol>
+            <li>Linearity: The relationship between X and Y is linear.</li>
+            <li>Independence: The observations are independent of each other.</li>
+            <li>Homoscedasticity: The variance of the residuals is constant.</li>
+            <li>Normality: The residuals are normally distributed.</li>
+            <li>No perfect multicollinearity among the predictors.</li>
+        </ol>
+        <p>Violation of these assumptions can lead to incorrect confidence intervals.</p>
+    </div>
+
+    <div class="section">
+        <h2>6. Example Calculation</h2>
+        <p>Suppose we have the following results for a coefficient \(\beta_1\):</p>
+        <ul>
+            <li>\(\hat{\beta}_1 = 2.5\)</li>
+            <li>\(SE(\hat{\beta}_1) = 0.5\)</li>
+            <li>n = 100, k = 3</li>
+            <li>\(t_{97,0.975} \approx 1.98\) (from t-distribution table)</li>
+        </ul>
+        <p>The 95% confidence interval would be:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            2.5 \pm 1.98 \cdot 0.5 &= 2.5 \pm 0.99 \\
+            &= [1.51, 3.49]
+            \end{aligned}
+            \]
+        </div>
+        <p>Interpretation: We are 95% confident that the true population value of \(\beta_1\) lies between 1.51 and 3.49.</p>
+    </div>
+
+    <div class="section">
+        <h2>7. Considerations</h2>
+        <ul>
+            <li>For large samples, the t-distribution approaches the normal distribution, so z-scores may be used instead of t-scores.</li>
+            <li>In the presence of heteroscedasticity, robust standard errors (e.g., White's standard errors) should be used to calculate more accurate confidence intervals.</li>
+            <li>For non-linear models or when assumptions are violated, bootstrap methods can be used to construct confidence intervals.</li>
+        </ul>
+    </div>
+</body>
+</html>

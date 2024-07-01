@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLS Estimator Variance: Homoscedasticity vs. Heteroscedasticity</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>OLS Estimator Variance: Homoscedasticity vs. Heteroscedasticity</h1>
+
+    <div class="section">
+        <h2>Part 1: Deriving the Variance of OLS Estimator under Homoscedasticity</h2>
+        
+        <p>Consider the linear regression model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        
+        <p>where \(\mathbf{y}\) is an \(n \times 1\) vector of observations, \(\mathbf{X}\) is an \(n \times k\) matrix of regressors, \(\boldsymbol{\beta}\) is a \(k \times 1\) vector of coefficients, and \(\boldsymbol{\varepsilon}\) is an \(n \times 1\) vector of error terms.</p>
+
+        <p>The OLS estimator is given by:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}
+            \]
+        </div>
+
+        <p>Substituting \(\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\):</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}) = \boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}
+            \]
+        </div>
+
+        <p>To find the variance, we focus on the random part: \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}\)</p>
+
+        <p>Under homoscedasticity, we assume:</p>
+        <div class="equation">
+            \[
+            \mathbb{E}[\boldsymbol{\varepsilon}] = \mathbf{0} \quad \text{and} \quad \mathbb{E}[\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'] = \sigma^2\mathbf{I}
+            \]
+        </div>
+
+        <p>Now, let's derive the variance:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \text{Var}(\hat{\boldsymbol{\beta}}) &= \mathbb{E}[(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta})(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta})'] \\
+            &= \mathbb{E}[((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon})((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon})'] \\
+            &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}[\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}']\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+            &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+            &= \sigma^2(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+            &= \sigma^2(\mathbf{X}'\mathbf{X})^{-1}
+            \end{aligned}
+            \]
+        </div>
+
+        <p>Thus, under homoscedasticity, the variance of the OLS estimator is:</p>
+        <div class="equation">
+            \[
+            \text{Var}(\hat{\boldsymbol{\beta}}) = \sigma^2(\mathbf{X}'\mathbf{X})^{-1}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Variance of OLS Estimator under Heteroscedasticity</h2>
+        
+        <p>Now, let's consider the case of heteroscedasticity, where the error variance is not constant across observations.</p>
+
+        <p>Under heteroscedasticity, we assume:</p>
+        <div class="equation">
+            \[
+            \mathbb{E}[\boldsymbol{\varepsilon}] = \mathbf{0} \quad \text{and} \quad \mathbb{E}[\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'] = \boldsymbol{\Omega}
+            \]
+        </div>
+
+        <p>where \(\boldsymbol{\Omega}\) is a diagonal matrix with \(\text{diag}(\boldsymbol{\Omega}) = (\sigma_1^2, \sigma_2^2, \ldots, \sigma_n^2)\).</p>
+
+        <p>Following the same derivation as before, but replacing \(\sigma^2\mathbf{I}\) with \(\boldsymbol{\Omega}\):</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \text{Var}(\hat{\boldsymbol{\beta}}) &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}[\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}']\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+            &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\Omega}\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}
+            \end{aligned}
+            \]
+        </div>
+
+        <p>This is the general form of the variance of the OLS estimator under heteroscedasticity.</p>
+    </div>
+
+    <div class="section">
+        <h2>Comparison and Implications</h2>
+        
+        <ol>
+            <li><strong>Efficiency:</strong> Under heteroscedasticity, OLS is no longer the Best Linear Unbiased Estimator (BLUE). It remains unbiased but is not the most efficient estimator.</li>
+            
+            <li><strong>Standard Errors:</strong> The standard homoscedastic formula for standard errors (\(\sqrt{\hat{\sigma}^2(\mathbf{X}'\mathbf{X})^{-1}_{ii}}\)) is no longer correct under heteroscedasticity, leading to incorrect inference.</li>
+            
+            <li><strong>Hypothesis Testing:</strong> T-tests and F-tests based on the homoscedastic variance will be invalid under heteroscedasticity.</li>
+            
+            <li><strong>Estimation Challenges:</strong> The heteroscedastic variance \(\boldsymbol{\Omega}\) is typically unknown and needs to be estimated, which can be challenging.</li>
+            
+            <li><strong>Solutions:</strong> Methods like Weighted Least Squares (WLS) or using heteroscedasticity-robust standard errors (e.g., White's standard errors) can address these issues.</li>
+        </ol>
+    </div>
+</body>
+</html>

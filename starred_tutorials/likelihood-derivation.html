@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Derivation of Likelihood Function in Linear Regression</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detailed Derivation of Likelihood Function in Linear Regression</h1>
+
+    <div class="section">
+        <h2>Starting Point: Linear Regression Model</h2>
+        <p>We begin with the linear regression model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>where:</p>
+        <ul>
+            <li>\(\mathbf{y}\) is an \(n \times 1\) vector of observations</li>
+            <li>\(\mathbf{X}\) is an \(n \times p\) matrix of predictors</li>
+            <li>\(\boldsymbol{\beta}\) is a \(p \times 1\) vector of coefficients</li>
+            <li>\(\boldsymbol{\varepsilon}\) is an \(n \times 1\) vector of errors</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Assumptions</h2>
+        <p>We assume that the errors are normally distributed:</p>
+        <div class="equation">
+            \[
+            \boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I})
+            \]
+        </div>
+        <p>This means each \(\varepsilon_i\) is independently and identically distributed as \(\mathcal{N}(0, \sigma^2)\).</p>
+    </div>
+
+    <div class="section">
+        <h2>Deriving the Likelihood Function</h2>
+        <p>1. Given \(\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\), we can write:</p>
+        <div class="equation">
+            \[
+            \boldsymbol{\varepsilon} = \mathbf{y} - \mathbf{X}\boldsymbol{\beta}
+            \]
+        </div>
+
+        <p>2. Since \(\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I})\), we know that \(\mathbf{y}\) given \(\boldsymbol{\beta}\) and \(\mathbf{X}\) follows a multivariate normal distribution:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} | \boldsymbol{\beta}, \mathbf{X} \sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2\mathbf{I})
+            \]
+        </div>
+
+        <p>3. The probability density function of a multivariate normal distribution \(\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\) is given by:</p>
+        <div class="equation">
+            \[
+            f(\mathbf{x}) = (2\pi)^{-n/2} |\boldsymbol{\Sigma}|^{-1/2} \exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})\right)
+            \]
+        </div>
+
+        <p>4. In our case:</p>
+        <ul>
+            <li>\(\mathbf{x} = \mathbf{y}\)</li>
+            <li>\(\boldsymbol{\mu} = \mathbf{X}\boldsymbol{\beta}\)</li>
+            <li>\(\boldsymbol{\Sigma} = \sigma^2\mathbf{I}\)</li>
+        </ul>
+
+        <p>5. Note that \(|\sigma^2\mathbf{I}| = (\sigma^2)^n\) and \((\sigma^2\mathbf{I})^{-1} = \frac{1}{\sigma^2}\mathbf{I}\)</p>
+
+        <p>6. Substituting these into the multivariate normal PDF:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            P(\mathbf{y}|\boldsymbol{\beta}, \mathbf{X}) &= (2\pi)^{-n/2} |\sigma^2\mathbf{I}|^{-1/2} \exp\left(-\frac{1}{2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T (\sigma^2\mathbf{I})^{-1} (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\right) \\[10pt]
+            &= (2\pi)^{-n/2} (\sigma^2)^{-n/2} \exp\left(-\frac{1}{2\sigma^2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\right) \\[10pt]
+            &= (2\pi\sigma^2)^{-n/2} \exp\left(-\frac{1}{2\sigma^2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\right)
+            \end{aligned}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Final Result</h2>
+        <p>Thus, we arrive at the likelihood function:</p>
+        <div class="equation">
+            \[
+            P(\mathbf{y}|\boldsymbol{\beta}, \mathbf{X}) = (2\pi\sigma^2)^{-n/2} \exp\left(-\frac{1}{2\sigma^2}(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})\right)
+            \]
+        </div>
+        <p>This likelihood function represents the probability of observing the data \(\mathbf{y}\) given the parameters \(\boldsymbol{\beta}\) and the predictors \(\mathbf{X}\), under the assumption of normally distributed errors.</p>
+    </div>
+</body>
+</html>

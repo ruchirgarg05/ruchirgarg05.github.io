@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribution of OLS Estimator: Normal Errors vs. i.i.d. Errors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous content remains unchanged -->
+
+    <div class="section">
+        <h2>Appendix: Proof of Variance of OLS Estimator</h2>
+        
+        <p><strong>Theorem:</strong> For the OLS estimator \(\hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\), the variance is given by:</p>
+        <div class="equation">
+            \[
+            \text{Var}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\text{Var}(\boldsymbol{\varepsilon})\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} = \sigma^2(\mathbf{X}'\mathbf{X})^{-1}
+            \]
+        </div>
+        
+        <p><strong>Proof:</strong></p>
+        
+        <ol>
+            <li>Recall that \(\hat{\boldsymbol{\beta}} = \boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}\).</li>
+            
+            <li>Since \(\boldsymbol{\beta}\) is a constant, \(\text{Var}(\hat{\boldsymbol{\beta}}) = \text{Var}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}]\).</li>
+            
+            <li>Let \(\mathbf{A} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\). We need to find \(\text{Var}(\mathbf{A}\boldsymbol{\varepsilon})\).</li>
+            
+            <li>For a random vector \(\mathbf{z}\) and a constant matrix \(\mathbf{B}\), we have the property: \(\text{Var}(\mathbf{B}\mathbf{z}) = \mathbf{B}\text{Var}(\mathbf{z})\mathbf{B}'\).</li>
+            
+            <li>Applying this property:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    \text{Var}(\mathbf{A}\boldsymbol{\varepsilon}) &= \mathbf{A}\text{Var}(\boldsymbol{\varepsilon})\mathbf{A}' \\
+                    &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\text{Var}(\boldsymbol{\varepsilon})\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+            
+            <li>We assume \(\text{Var}(\boldsymbol{\varepsilon}) = \sigma^2\mathbf{I}\), where \(\mathbf{I}\) is the identity matrix. Substituting this:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    \text{Var}(\mathbf{A}\boldsymbol{\varepsilon}) &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\sigma^2\mathbf{I}\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+                    &= \sigma^2(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+                    &= \sigma^2(\mathbf{X}'\mathbf{X})^{-1}
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+        </ol>
+        
+        <p><strong>Conclusion:</strong> We have proven that:</p>
+        <div class="equation">
+            \[
+            \text{Var}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\text{Var}(\boldsymbol{\varepsilon})\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} = \sigma^2(\mathbf{X}'\mathbf{X})^{-1}
+            \]
+        </div>
+        
+        <p>This result is crucial in determining the precision of our OLS estimates and in constructing confidence intervals and hypothesis tests for the regression coefficients.</p>
+    </div>
+</body>
+</html>
