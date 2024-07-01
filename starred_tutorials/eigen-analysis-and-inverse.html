@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eigen Analysis and Inverse of M = I + XX'</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eigen Analysis and Inverse of M = I + XX'</h1>
+
+    <div class="section">
+        <h2>1. Eigenvalues</h2>
+        <p>For M = I + XX', where X is an n×n matrix:</p>
+        <ol>
+            <li>Let λ₁, λ₂, ..., λᵣ be the non-zero eigenvalues of XX' (r ≤ n).</li>
+            <li>The eigenvalues of M are:
+                <ul>
+                    <li>1 + λᵢ for i = 1 to r</li>
+                    <li>1 with multiplicity n - r</li>
+                </ul>
+            </li>
+        </ol>
+        <p>Proof sketch:</p>
+        <ul>
+            <li>If v is an eigenvector of XX' with eigenvalue λ: XX'v = λv</li>
+            <li>Then, Mv = (I + XX')v = v + XX'v = v + λv = (1 + λ)v</li>
+            <li>For vectors in the nullspace of X': X'v = 0, so Mv = v</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. Eigenvectors</h2>
+        <ol>
+            <li>For eigenvalues 1 + λᵢ: The eigenvectors are the same as the eigenvectors of XX' for λᵢ.</li>
+            <li>For eigenvalue 1: The eigenvectors are any vectors in the nullspace of X'.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. Inverse of M</h2>
+        <p>The inverse of M can be derived using the Sherman-Morrison-Woodbury formula:</p>
+        <div class="equation">
+            \[
+            M^{-1} = (I + XX')^{-1} = I - X(I + X'X)^{-1}X'
+            \]
+        </div>
+        <p>Proof:</p>
+        <ol>
+            <li>Let M⁻¹ = I - X(I + X'X)⁻¹X'</li>
+            <li>Multiply M and M⁻¹:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    MM^{-1} &= (I + XX')(I - X(I + X'X)^{-1}X') \\
+                    &= I - X(I + X'X)^{-1}X' + XX' - XX'X(I + X'X)^{-1}X' \\
+                    &= I - X(I + X'X)^{-1}X' + X(I - (I + X'X)(I + X'X)^{-1})X' \\
+                    &= I - X(I + X'X)^{-1}X' + X((I + X'X)(I + X'X)^{-1} - I)X' \\
+                    &= I - X(I + X'X)^{-1}X' + X(I - I)X' = I
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>4. Properties and Implications</h2>
+        <ul>
+            <li>M is always positive definite as all its eigenvalues are greater than 1.</li>
+            <li>The inverse formula is computationally efficient, especially when n is large and the rank of X is small.</li>
+            <li>This structure appears in various statistical and machine learning contexts, such as in ridge regression and Gaussian process regression.</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of OLS Optimality for IID Data</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proof of OLS Optimality for IID Data</h1>
+
+    <div class="section">
+        <h2>1. Theorem</h2>
+        <p>For independent and identically distributed (IID) data, no estimator whose data points are weighted cumulative sums of the IID observations can be better than the OLS estimator, even when the weights are optimally chosen.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Setup</h2>
+        <p>Consider the simple linear regression model:</p>
+        <div class="equation">
+            \[
+            Y_i = \beta X_i + \varepsilon_i, \quad i = 1, ..., n
+            \]
+        </div>
+        <p>Where ε_i are IID with mean 0 and variance σ².</p>
+    </div>
+
+    <div class="section">
+        <h2>3. OLS Estimator</h2>
+        <p>The OLS estimator is:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_{OLS} = \frac{\sum_{i=1}^n X_i Y_i}{\sum_{i=1}^n X_i^2}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Weighted Cumulative Sum Estimator</h2>
+        <p>Consider an estimator of the form:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_{W} = \frac{\sum_{i=1}^n w_i S_i}{\sum_{i=1}^n X_i^2}
+            \]
+        </div>
+        <p>Where S_i = Σ_j=1^i X_j Y_j and w_i are weights.</p>
+    </div>
+
+    <div class="section">
+        <h2>5. Proof</h2>
+        <ol>
+            <li>Both estimators are unbiased: E[β̂_OLS] = E[β̂_W] = β</li>
+            <li>Variance of OLS estimator:
+                <div class="equation">
+                    \[
+                    Var(\hat{\beta}_{OLS}) = \frac{\sigma^2}{\sum_{i=1}^n X_i^2}
+                    \]
+                </div>
+            </li>
+            <li>Variance of weighted estimator:
+                <div class="equation">
+                    \[
+                    Var(\hat{\beta}_{W}) = \frac{\sigma^2 \sum_{i=1}^n w_i^2 i}{\left(\sum_{i=1}^n X_i^2\right)^2}
+                    \]
+                </div>
+            </li>
+            <li>The difference in variances is:
+                <div class="equation">
+                    \[
+                    Var(\hat{\beta}_{W}) - Var(\hat{\beta}_{OLS}) = \frac{\sigma^2}{\left(\sum_{i=1}^n X_i^2\right)^2} \left(\sum_{i=1}^n w_i^2 i - 1\right)
+                    \]
+                </div>
+            </li>
+            <li>By the Cauchy-Schwarz inequality:
+                <div class="equation">
+                    \[
+                    \left(\sum_{i=1}^n w_i\right)^2 \leq n \sum_{i=1}^n w_i^2
+                    \]
+                </div>
+            </li>
+            <li>For β̂_W to be unbiased, we must have Σw_i = 1. Therefore:
+                <div class="equation">
+                    \[
+                    1 \leq n \sum_{i=1}^n w_i^2
+                    \]
+                </div>
+            </li>
+            <li>This implies:
+                <div class="equation">
+                    \[
+                    \sum_{i=1}^n w_i^2 i \geq \frac{1}{n} \sum_{i=1}^n i = \frac{n+1}{2} > 1
+                    \]
+                </div>
+            </li>
+            <li>Therefore, Var(β̂_W) - Var(β̂_OLS) > 0 for any
