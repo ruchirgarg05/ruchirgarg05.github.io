@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof: R² Equals Squared Correlation Coefficient in Simple Linear Regression</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proof: R² Equals Squared Correlation Coefficient in Simple Linear Regression</h1>
+
+    <div class="section">
+        <h2>1. Definitions and Setup</h2>
+        <p>Let's start by defining our terms:</p>
+        <ul>
+            <li>y: observed values</li>
+            <li>ŷ: predicted values</li>
+            <li>ȳ: mean of observed values</li>
+            <li>n: number of observations</li>
+        </ul>
+        
+        <h3>Coefficient of Determination (R²)</h3>
+        <div class="equation">
+            \[
+            R^2 = 1 - \frac{SS_{res}}{SS_{tot}} = \frac{SS_{reg}}{SS_{tot}}
+            \]
+        </div>
+        <p>Where:</p>
+        <ul>
+            <li>SS_res: Sum of squared residuals = Σ(y - ŷ)²</li>
+            <li>SS_tot: Total sum of squares = Σ(y - ȳ)²</li>
+            <li>SS_reg: Regression sum of squares = Σ(ŷ - ȳ)²</li>
+        </ul>
+
+        <h3>Correlation Coefficient (r)</h3>
+        <div class="equation">
+            \[
+            r = \frac{\sum (y_i - \bar{y})(\hat{y}_i - \bar{\hat{y}})}{\sqrt{\sum (y_i - \bar{y})^2 \sum (\hat{y}_i - \bar{\hat{y}})^2}}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Key Properties in Simple Linear Regression</h2>
+        <p>In simple linear regression, we have these important properties:</p>
+        <ol>
+            <li>The mean of predicted values equals the mean of observed values: ȳ = ŷ̄</li>
+            <li>The line of best fit passes through the point (x̄, ȳ)</li>
+            <li>Σ(y - ŷ) = 0</li>
+            <li>Σ(y - ŷ)(ŷ - ȳ) = 0 (orthogonality of residuals and predicted values)</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. Proof</h2>
+        
+        <h3>Step 1: Expand SS_tot</h3>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            SS_{tot} &= \sum (y_i - \bar{y})^2 \\
+            &= \sum [(y_i - \hat{y}_i) + (\hat{y}_i - \bar{y})]^2 \\
+            &= \sum (y_i - \hat{y}_i)^2 + \sum (\hat{y}_i - \bar{y})^2 + 2\sum (y_i - \hat{y}_i)(\hat{y}_i - \bar{y}) \\
+            &= SS_{res} + SS_{reg} + 0 \quad \text{(due to orthogonality)}
+            \end{aligned}
+            \]
+        </div>
+
+        <h3>Step 2: Express R² in terms of SS_reg and SS_tot</h3>
+        <div class="equation">
+            \[
+            R^2 = \frac{SS_{reg}}{SS_{tot}} = \frac{\sum (\hat{y}_i - \bar{y})^2}{\sum (y_i - \bar{y})^2}
+            \]
+        </div>
+
+        <h3>Step 3: Expand the numerator of the correlation coefficient</h3>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \sum (y_i - \bar{y})(\hat{y}_i - \bar{y}) &= \sum (y_i\hat{y}_i - y_i\bar{y} - \bar{y}\hat{y}_i + \bar{y}^2) \\
+            &= \sum y_i\hat{y}_i - n\bar{y}^2 - n\bar{y}^2 + n\bar{y}^2 \\
+            &= \sum y_i\hat{y}_i - n\bar{y}^2 \\
+            &= \sum \hat{y}_i^2 - n\bar{y}^2 \quad \text{(since } \sum y_i\hat{y}_i = \sum \hat{y}_i^2 \text{ in simple linear regression)} \\
+            &= \sum (\hat{y}_i - \bar{y})^2
+            \end{aligned}
+            \]
+        </div>
+
+        <h3>Step 4: Write out the squared correlation coefficient</h3>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            r^2 &= \frac{[\sum (y_i - \bar{y})(\hat{y}_i - \bar{y})]^2}{\sum (y_i - \bar{y})^2 \sum (\hat{y}_i - \bar{y})^2} \\
+            &= \frac{[\sum (\hat{y}_i - \bar{y})^2]^2}{\sum (y_i - \bar{y})^2 \sum (\hat{y}_i - \bar{y})^2} \\
+            &= \frac{\sum (\hat{y}_i - \bar{y})^2}{\sum (y_i - \bar{y})^2} \\
+            &= R^2
+            \end{aligned}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Conclusion</h2>
+        <p>We have shown that in simple linear regression, the coefficient of determination (R²) is indeed equal to the square of the correlation coefficient between the observed and predicted values.</p>
+        <p>This relationship highlights the dual interpretation of R² in simple linear regression:</p>
+        <ol>
+            <li>As the proportion of variance in the dependent variable that is predictable from the independent variable.</li>
+            <li>As the square of the correlation between observed and predicted values.</li>
+        </ol>
+        <p>It's important to note that this equality holds specifically for simple linear regression. In multiple regression, R² retains its interpretation as the proportion of variance explained, but it is not necessarily equal to the square of any single correlation coefficient.</p>
+    </div>
+</body>
+</html>
