@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centering Variables in Multiple Regression: Reducing Multicollinearity</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Centering Variables in Multiple Regression: Reducing Multicollinearity</h1>
+
+    <div class="section">
+        <h2>1. Introduction</h2>
+        <p>Centering a variable involves subtracting its mean from each observation, resulting in a new variable with a mean of zero. This transformation can reduce multicollinearity in multiple regression models, particularly when dealing with interaction terms or polynomial terms.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Theoretical Explanation</h2>
+        <p>Consider a multiple regression model with an interaction term:</p>
+        <div class="equation">
+            \[
+            Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3(X_1 \cdot X_2) + \varepsilon
+            \]
+        </div>
+        <p>In this model, \(X_1\), \(X_2\), and \(X_1 \cdot X_2\) are often highly correlated, leading to multicollinearity.</p>
+        <p>Now, let's center \(X_1\) and \(X_2\) by subtracting their means:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            X_1^c &= X_1 - \bar{X_1} \\
+            X_2^c &= X_2 - \bar{X_2}
+            \end{aligned}
+            \]
+        </div>
+        <p>The centered model becomes:</p>
+        <div class="equation">
+            \[
+            Y = \beta_0^c + \beta_1^cX_1^c + \beta_2^cX_2^c + \beta_3^c(X_1^c \cdot X_2^c) + \varepsilon
+            \]
+        </div>
+        <p>In this centered model, the correlation between \(X_1^c\), \(X_2^c\), and their interaction term \(X_1^c \cdot X_2^c\) is typically reduced, mitigating multicollinearity.</p>
+    </div>
+
+    <div class="section">
+        <h2>3. Numerical Example</h2>
+        <p>Let's consider a small dataset to illustrate this concept:</p>
+        <table>
+            <tr>
+                <th>Observation</th>
+                <th>X₁</th>
+                <th>X₂</th>
+                <th>Y</th>
+            </tr>
+            <tr><td>1</td><td>1</td><td>4</td><td>10</td></tr>
+            <tr><td>2</td><td>2</td><td>5</td><td>15</td></tr>
+            <tr><td>3</td><td>3</td><td>6</td><td>22</td></tr>
+            <tr><td>4</td><td>4</td><td>7</td><td>31</td></tr>
+            <tr><td>5</td><td>5</td><td>8</td><td>42</td></tr>
+        </table>
+
+        <p>Step 1: Calculate means of X₁ and X₂</p>
+        <p>\(\bar{X_1} = 3\), \(\bar{X_2} = 6\)</p>
+
+        <p>Step 2: Center X₁ and X₂</p>
+        <table>
+            <tr>
+                <th>Observation</th>
+                <th>X₁ᶜ = X₁ - 3</th>
+                <th>X₂ᶜ = X₂ - 6</th>
+                <th>Y</th>
+            </tr>
+            <tr><td>1</td><td>-2</td><td>-2</td><td>10</td></tr>
+            <tr><td>2</td><td>-1</td><td>-1</td><td>15</td></tr>
+            <tr><td>3</td><td>0</td><td>0</td><td>22</td></tr>
+            <tr><td>4</td><td>1</td><td>1</td><td>31</td></tr>
+            <tr><td>5</td><td>2</td><td>2</td><td>42</td></tr>
+        </table>
+
+        <p>Step 3: Calculate correlations</p>
+        <p>Original variables:</p>
+        <ul>
+            <li>Cor(X₁, X₂) = 1.00</li>
+            <li>Cor(X₁, X₁·X₂) = 0.9747</li>
+            <li>Cor(X₂, X₁·X₂) = 0.9843</li>
+        </ul>
+        <p>Centered variables:</p>
+        <ul>
+            <li>Cor(X₁ᶜ, X₂ᶜ) = 1.00 (unchanged)</li>
+            <li>Cor(X₁ᶜ, X₁ᶜ·X₂ᶜ) = 0.00</li>
+            <li>Cor(X₂ᶜ, X₁ᶜ·X₂ᶜ) = 0.00</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Interpretation</h2>
+        <p>In this example, we see that centering the variables has dramatically reduced the correlations between the main effects (X₁ᶜ and X₂ᶜ) and their interaction term (X₁ᶜ·X₂ᶜ). The correlation between X₁ᶜ and X₂ᶜ remains unchanged because centering doesn't affect the linear relationship between variables.</p>
+        <p>The reduction in correlations with the interaction term helps to mitigate multicollinearity, making the coefficient estimates more stable and easier to interpret. This is particularly useful when the main effects and their interactions are of interest in the analysis.</p>
+    </div>
+
+    <div class="section">
+        <h2>5. Benefits and Considerations</h2>
+        <ul>
+            <li>Improved Interpretability: The intercept in the centered model represents the expected value of Y when all centered predictors are at their means (i.e., zero).</li>
+            <li>Numerical Stability: Centering can improve the numerical stability of the computations, especially with polynomial terms.</li>
+            <li>Unchanged Model Fit: Centering doesn't change the overall fit of the model (R², residuals, etc.).</li>
+            <li>Coefficient Interpretation: While the coefficients for the main effects may change, their interpretation becomes more straightforward in the centered model.</li>
+        </ul>
+    </div>
+</body>
+</html>
