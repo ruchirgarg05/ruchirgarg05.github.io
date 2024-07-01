@@ -129,4 +129,137 @@
         <p>We have proven that Σ(yᵢ - ŷᵢ)(ŷᵢ - ȳ) = 0 using matrix notation. This proof demonstrates the orthogonality of residuals to centered predicted values, which is a fundamental property in regression analysis. It underlies many important results in linear regression theory and provides insights into the nature of least squares estimation.</p>
     </div>
 </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Intuition: Orthogonality in Regression Using Vector Spaces</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Geometric Intuition: Orthogonality in Regression Using Vector Spaces</h1>
+
+    <div class="section">
+        <h2>1. Vector Space Setup</h2>
+        <p>Let's visualize regression in n-dimensional space:</p>
+        <ul>
+            <li><strong>y</strong>: The observed values vector (point in n-dimensional space)</li>
+            <li><strong>C(X)</strong>: The column space of X (subspace where all possible ŷ lie)</li>
+            <li><strong>1</strong>: The vector of ones (represents the mean direction)</li>
+            <li><strong>ŷ</strong>: The predicted values (projection of y onto C(X))</li>
+            <li><strong>e</strong>: The residual vector (y - ŷ)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. Key Geometric Insights</h2>
+        <ol>
+            <li>ŷ is the orthogonal projection of y onto C(X)</li>
+            <li>e is perpendicular to all vectors in C(X)</li>
+            <li>1 (the mean direction) is in C(X) if there's an intercept</li>
+            <li>(ŷ - ȳ1) is ŷ centered around its mean</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. Geometric Proof</h2>
+        <p>To show that Σ(yᵢ - ŷᵢ)(ŷᵢ - ȳ) = 0, or equivalently, e'(ŷ - ȳ1) = 0:</p>
+        
+        <h3>Step 1: Decompose ŷ</h3>
+        <p>We can write ŷ as the sum of its mean component and the centered component:</p>
+        <div class="equation">
+            \[
+            \hat{\mathbf{y}} = \bar{y}\mathbf{1} + (\hat{\mathbf{y}} - \bar{y}\mathbf{1})
+            \]
+        </div>
+
+        <h3>Step 2: Orthogonality of e to components of ŷ</h3>
+        <ul>
+            <li>e ⊥ ȳ1 because 1 is in C(X)</li>
+            <li>e ⊥ (ŷ - ȳ1) because this vector is in C(X)</li>
+        </ul>
+
+        <h3>Step 3: Conclusion</h3>
+        <p>Since e is orthogonal to both components of ŷ, it must be orthogonal to ŷ - ȳ1.</p>
+        
+        <div class="equation">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                    refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" />
+                    </marker>
+                </defs>
+                <!-- C(X) plane -->
+                <path d="M50,250 L350,250 L200,50 Z" fill="#e6e6e6" stroke="black"/>
+                <!-- y vector -->
+                <line x1="200" y1="250" x2="100" y2="100" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <!-- ŷ vector -->
+                <line x1="200" y1="250" x2="250" y2="150" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <!-- e vector -->
+                <line x1="250" y1="150" x2="100" y2="100" stroke="green" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <!-- 1 vector -->
+                <line x1="200" y1="250" x2="200" y2="150" stroke="purple" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <!-- ŷ - ȳ1 vector -->
+                <line x1="200" y1="150" x2="250" y2="150" stroke="orange" stroke-width="2" marker-end="url(#arrowhead)"/>
+                
+                <text x="90" y="90" fill="blue">y</text>
+                <text x="260" y="140" fill="red">ŷ</text>
+                <text x="150" y="120" fill="green">e</text>
+                <text x="180" y="140" fill="purple">ȳ1</text>
+                <text x="220" y="140" fill="orange">ŷ - ȳ1</text>
+                <text x="320" y="270" fill="black">C(X)</text>
+            </svg>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Intuitive Understanding</h2>
+        <ul>
+            <li>The residual vector e is perpendicular to the entire C(X) plane.</li>
+            <li>Both ȳ1 and (ŷ - ȳ1) lie entirely within C(X).</li>
+            <li>Therefore, e must be perpendicular to (ŷ - ȳ1).</li>
+            <li>This perpendicularity is equivalent to the statement Σ(yᵢ - ŷᵢ)(ŷᵢ - ȳ) = 0.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. Implications</h2>
+        <ul>
+            <li><strong>Variance Decomposition:</strong> This orthogonality allows us to decompose the total variance into explained and unexplained components.</li>
+            <li><strong>Least Squares Property:</strong> It ensures that ŷ is indeed the closest point in C(X) to y.</li>
+            <li><strong>Model Interpretation:</strong> The residuals contain no linear information about the predictors or their linear combinations.</li>
+            <li><strong>Efficiency of Estimators:</strong> This property is crucial in proving that OLS estimators are BLUE (Best Linear Unbiased Estimators).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>6. Conclusion</h2>
+        <p>This geometric approach provides an intuitive understanding of why Σ(yᵢ - ŷᵢ)(ŷᵢ - ȳ) = 0. It's a direct consequence of how linear regression finds the best fit by projecting the observed values onto the subspace spanned by the predictors. The orthogonality of residuals to centered predicted values is a fundamental property that underpins many key results in regression analysis.</p>
+    </div>
+</body>
 </html>
