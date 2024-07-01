@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bias and Variance of Ridge Regression Estimator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bias and Variance of Ridge Regression Estimator</h1>
+
+    <div class="section">
+        <h2>1. Ridge Regression Estimator</h2>
+        <p>The Ridge regression estimator is given by:</p>
+        <div class="equation">
+            \[
+            \hat{\beta}_{Ridge} = (X^TX + \lambda I)^{-1}X^Ty
+            \]
+        </div>
+        <p>where λ > 0 is the regularization parameter, X is the design matrix, y is the response vector, and I is the identity matrix.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Bias of Ridge Regression Estimator</h2>
+        <p>To derive the bias, we start with the true model: y = Xβ + ε</p>
+        <ol>
+            <li>Express 𝛃̂_Ridge in terms of β:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    \hat{\beta}_{Ridge} &= (X^TX + \lambda I)^{-1}X^T(X\beta + \varepsilon) \\
+                    &= (X^TX + \lambda I)^{-1}(X^TX)\beta + (X^TX + \lambda I)^{-1}X^T\varepsilon
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+            <li>Take the expectation:
+                <div class="equation">
+                    \[
+                    E[\hat{\beta}_{Ridge}] = (X^TX + \lambda I)^{-1}(X^TX)\beta
+                    \]
+                </div>
+            </li>
+            <li>The bias is then:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    Bias(\hat{\beta}_{Ridge}) &= E[\hat{\beta}_{Ridge}] - \beta \\
+                    &= [(X^TX + \lambda I)^{-1}(X^TX) - I]\beta \\
+                    &= -\lambda(X^TX + \lambda I)^{-1}\beta
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+        </ol>
+        <p>Note that the bias is non-zero for λ > 0, unlike OLS which is unbiased.</p>
+    </div>
+
+    <div class="section">
+        <h2>3. Variance of Ridge Regression Estimator</h2>
+        <p>To derive the variance, we use the fact that Var(y) = σ²I, where σ² is the error variance.</p>
+        <ol>
+            <li>Start with the expression for 𝛃̂_Ridge:
+                <div class="equation">
+                    \[
+                    \hat{\beta}_{Ridge} = (X^TX + \lambda I)^{-1}X^Ty
+                    \]
+                </div>
+            </li>
+            <li>The variance is:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    Var(\hat{\beta}_{Ridge}) &= (X^TX + \lambda I)^{-1}X^T Var(y) X(X^TX + \lambda I)^{-1} \\
+                    &= \sigma^2 (X^TX + \lambda I)^{-1}X^TX(X^TX + \lambda I)^{-1}
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>4. Mean Squared Error (MSE)</h2>
+        <p>The MSE is the sum of the squared bias and the trace of the variance matrix:</p>
+        <div class="equation">
+            \[
+            MSE(\hat{\beta}_{Ridge}) = \|\text{Bias}(\hat{\beta}_{Ridge})\|^2 + \text{tr}(Var(\hat{\beta}_{Ridge}))
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>5. Conditions for Lower MSE than OLS</h2>
+        <p>Ridge regression produces a lower MSE than OLS when the reduction in variance outweighs the introduced bias. This typically occurs when:</p>
+        <ol>
+            <li>Multicollinearity is present in the predictors.</li>
+            <li>The true β values are small (close to zero).</li>
+            <li>The signal-to-noise ratio is low (high error variance relative to the true effects).</li>
+        </ol>
+        <p>Mathematically, Ridge regression has lower MSE when:</p>
+        <div class="equation">
+            \[
+            \lambda^2 \beta^T(X^TX + \lambda I)^{-2}\beta < \sigma^2 \text{tr}(X^TX)^{-1} - \sigma^2 \text{tr}((X^TX + \lambda I)^{-1}X^TX(X^TX + \lambda I)^{-1})
+            \]
+        </div>
+        <p>This condition compares the squared bias introduced by Ridge regression (left side) to the reduction in variance it achieves (right side).</p>
+    </div>
+
+    <div class="section">
+        <h2>6. Practical Implications</h2>
+        <ul>
+            <li>Ridge regression trades off increased bias for reduced variance.</li>
+            <li>It's particularly useful when predictors are highly correlated or when there are many predictors relative to the sample size.</li>
+            <li>The optimal λ can be chosen through cross-validation or other model selection techniques.</li>
+            <li>As λ → 0, Ridge regression approaches OLS; as λ → ∞, all coefficients approach zero.</li>
+        </ul>
+    </div>
+</body>
+</html>
