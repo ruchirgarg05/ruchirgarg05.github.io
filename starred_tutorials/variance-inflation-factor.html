@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variance Inflation Factor (VIF) in Multicollinearity</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Variance Inflation Factor (VIF) in Multicollinearity</h1>
+
+    <div class="section">
+        <h2>1. Concept of VIF</h2>
+        <p>The Variance Inflation Factor (VIF) is a measure of the degree of multicollinearity in a set of multiple regression variables. It quantifies how much the variance of an estimated regression coefficient is increased due to collinearity with other predictors.</p>
+        <p>Key points:</p>
+        <ul>
+            <li>VIF is calculated for each predictor variable.</li>
+            <li>It indicates how much the variance of a coefficient is "inflated" due to linear dependence with other predictors.</li>
+            <li>VIF helps identify which predictors are involved in multicollinearity and to what extent.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. Mathematical Derivation of VIF</h2>
+        <p>To derive the VIF, we start with the variance of the OLS estimator in multiple regression:</p>
+        
+        <ol>
+            <li>In a multiple regression model, the variance of the j-th coefficient is:
+                <div class="equation">
+                    \[
+                    Var(\hat{\beta}_j) = \frac{\sigma^2}{(1-R_j^2)S_{XX_j}}
+                    \]
+                </div>
+                where σ² is the error variance, R_j² is the R-squared from regressing X_j on all other predictors, and S_{XX_j} is the sum of squared deviations of X_j.
+            </li>
+            
+            <li>In the absence of multicollinearity (R_j² = 0), the variance would be:
+                <div class="equation">
+                    \[
+                    Var(\hat{\beta}_j)_{no\_collinearity} = \frac{\sigma^2}{S_{XX_j}}
+                    \]
+                </div>
+            </li>
+            
+            <li>The VIF is defined as the ratio of these variances:
+                <div class="equation">
+                    \[
+                    VIF_j = \frac{Var(\hat{\beta}_j)}{Var(\hat{\beta}_j)_{no\_collinearity}} = \frac{1}{1-R_j^2}
+                    \]
+                </div>
+            </li>
+        </ol>
+        
+        <p>Therefore, the VIF for the j-th predictor is:</p>
+        <div class="equation">
+            \[
+            VIF_j = \frac{1}{1-R_j^2}
+            \]
+        </div>
+        <p>where R_j² is the coefficient of determination when X_j is regressed on all other predictors.</p>
+    </div>
+
+    <div class="section">
+        <h2>3. Interpretation of VIF Values</h2>
+        <p>The interpretation of VIF values is as follows:</p>
+        <ul>
+            <li>VIF = 1: No correlation between X_j and other predictors</li>
+            <li>1 &lt; VIF &lt; 5: Moderate correlation</li>
+            <li>5 ≤ VIF &lt; 10: High correlation</li>
+            <li>VIF ≥ 10: Very high correlation, indicates problematic multicollinearity</li>
+        </ul>
+        <p>Specific interpretations:</p>
+        <ul>
+            <li>VIF = 1: The predictor is not correlated with others.</li>
+            <li>VIF = 4: The standard error for the coefficient of that predictor is 2 times (√4) larger than it would be if there was no multicollinearity.</li>
+            <li>VIF = 10: The standard error is √10 ≈ 3.16 times larger than it would be in the absence of multicollinearity.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Implications and Use of VIF</h2>
+        <ol>
+            <li>Identifying Multicollinearity: High VIF values indicate which variables are involved in multicollinearity.</li>
+            <li>Variable Selection: VIF can guide the removal of highly collinear predictors to improve model stability.</li>
+            <li>Model Interpretation: High VIFs suggest that coefficient estimates and their standard errors may be unreliable.</li>
+            <li>Prediction Accuracy: While multicollinearity doesn't affect overall model fit, it can impact individual predictor importance and model interpretation.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>5. Limitations</h2>
+        <ul>
+            <li>VIF doesn't distinguish between several moderate correlations and one high correlation.</li>
+            <li>It's sensitive to the scale of the variables.</li>
+            <li>VIF alone doesn't indicate which variables to remove or how to address multicollinearity.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>6. Conclusion</h2>
+        <p>The Variance Inflation Factor is a valuable tool for detecting and quantifying multicollinearity in multiple regression. By expressing how much the variance of a coefficient is inflated due to linear dependencies with other predictors, VIF provides insights into the reliability of regression coefficients and guides decisions in model refinement.</p>
+    </div>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variance Inflation Factor (VIF) in Multicollinearity</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous content remains unchanged -->
+
+    <div class="section">
+        <h2>Appendix: Derivation of Var(β̂j) = σ²/((1-R²j)SXXj)</h2>
+        
+        <p>We'll derive the expression for the variance of the j-th regression coefficient in multiple linear regression. This derivation is key to understanding the Variance Inflation Factor (VIF).</p>
+        
+        <h3>Step 1: Start with the General Form of Var(β̂)</h3>
+        <p>In matrix notation, the variance of the OLS estimator β̂ is given by:</p>
+        <div class="equation">
+            \[
+            Var(\hat{\boldsymbol{\beta}}) = \sigma^2(X'X)^{-1}
+            \]
+        </div>
+        <p>where X is the design matrix and σ² is the error variance.</p>
+
+        <h3>Step 2: Focus on the j-th Coefficient</h3>
+        <p>The variance of the j-th coefficient, β̂j, is the j-th diagonal element of this matrix:</p>
+        <div class="equation">
+            \[
+            Var(\hat{\beta}_j) = \sigma^2[(X'X)^{-1}]_{jj}
+            \]
+        </div>
+
+        <h3>Step 3: Partition the X Matrix</h3>
+        <p>Partition X into Xj (the j-th predictor) and X-j (all other predictors):</p>
+        <div class="equation">
+            \[
+            X = [X_{-j} \quad X_j]
+            \]
+        </div>
+
+        <h3>Step 4: Apply the Partitioned Inverse Formula</h3>
+        <p>Using the partitioned inverse formula, we can express [(X'X)⁻¹]jj as:</p>
+        <div class="equation">
+            \[
+            [(X'X)^{-1}]_{jj} = \frac{1}{X_j'M_{-j}X_j}
+            \]
+        </div>
+        <p>where M-j = I - X-j(X'-jX-j)⁻¹X'-j is the projection matrix onto the orthogonal complement of the space spanned by X-j.</p>
+
+        <h3>Step 5: Interpret M-jXj</h3>
+        <p>M-jXj represents the residuals from regressing Xj on all other predictors. We can write:</p>
+        <div class="equation">
+            \[
+            M_{-j}X_j = X_j - \hat{X}_j
+            \]
+        </div>
+        <p>where X̂j is the predicted Xj from its regression on other predictors.</p>
+
+        <h3>Step 6: Relate to R²j</h3>
+        <p>The R-squared from regressing Xj on other predictors is:</p>
+        <div class="equation">
+            \[
+            R_j^2 = 1 - \frac{(X_j - \hat{X}_j)'(X_j - \hat{X}_j)}{X_j'X_j} = 1 - \frac{X_j'M_{-j}X_j}{X_j'X_j}
+            \]
+        </div>
+
+        <h3>Step 7: Solve for X'j M-j Xj</h3>
+        <p>Rearranging the R²j equation:</p>
+        <div class="equation">
+            \[
+            X_j'M_{-j}X_j = (1-R_j^2)X_j'X_j = (1-R_j^2)S_{XX_j}
+            \]
+        </div>
+        <p>where SXXj is the sum of squared deviations of Xj.</p>
+
+        <h3>Step 8: Combine Results</h3>
+        <p>Substituting back into the variance formula:</p>
+        <div class="equation">
+            \[
+            Var(\hat{\beta}_j) = \sigma^2[(X'X)^{-1}]_{jj} = \sigma^2 \frac{1}{X_j'M_{-j}X_j} = \frac{\sigma^2}{(1-R_j^2)S_{XX_j}}
+            \]
+        </div>
+
+        <h3>Conclusion</h3>
+        <p>We have derived the expression:</p>
+        <div class="equation">
+            \[
+            Var(\hat{\beta}_j) = \frac{\sigma^2}{(1-R_j^2)S_{XX_j}}
+            \]
+        </div>
+        <p>This formula shows how the variance of β̂j is inflated by a factor of 1/(1-R²j) due to multicollinearity, which is precisely the Variance Inflation Factor (VIF).</p>
+    </div>
+</body>
+</html>
