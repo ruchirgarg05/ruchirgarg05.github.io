@@ -1,5 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribution of OLS Estimator: Normal Errors vs. i.i.d. Errors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Distribution of OLS Estimator: Normal Errors vs. i.i.d. Errors</h1>
+
+    <div class="section">
+        <h2>Part 1: Normality of OLS Estimator with Normal Errors</h2>
+        
+        <p><strong>Theorem:</strong> Given a linear regression model with normally distributed errors, the Ordinary Least Squares (OLS) estimator follows a normal distribution.</p>
+        
+        <p><strong>Proof:</strong></p>
+        
+        <p>1. Consider the linear regression model:</p>
+        <div class="equation">
+            \[
+            \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+            \]
+        </div>
+        <p>where \(\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I})\).</p>
+        
+        <p>2. The OLS estimator is given by:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}
+            \]
+        </div>
+        
+        <p>3. Substituting the model equation:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \hat{\boldsymbol{\beta}} &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}) \\
+            &= \boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}
+            \end{aligned}
+            \]
+        </div>
+        
+        <p>4. The term \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}\) is a linear combination of the elements of \(\boldsymbol{\varepsilon}\), which are normally distributed.</p>
+        
+        <p>5. A key property of normal distributions is that any linear combination of normal random variables is also normally distributed.</p>
+        
+        <p>6. Therefore, \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}\) follows a normal distribution.</p>
+        
+        <p>7. We can characterize this distribution:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            \mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbb{E}[\boldsymbol{\varepsilon}] = \mathbf{0} \\
+            \text{Var}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}] &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\text{Var}(\boldsymbol{\varepsilon})\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1} \\
+            &= \sigma^2(\mathbf{X}'\mathbf{X})^{-1}
+            \end{aligned}
+            \]
+        </div>
+        
+        <p>8. Thus, \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2(\mathbf{X}'\mathbf{X})^{-1})\)</p>
+        
+        <p>9. Since \(\hat{\boldsymbol{\beta}}\) is the sum of a constant vector \(\boldsymbol{\beta}\) and a normally distributed random vector, it follows a normal distribution with a shifted mean:</p>
+        <div class="equation">
+            \[
+            \hat{\boldsymbol{\beta}} \sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}'\mathbf{X})^{-1})
+            \]
+        </div>
+        
+        <p><strong>Conclusion:</strong> The OLS estimator \(\hat{\boldsymbol{\beta}}\) is normally distributed around the true parameter \(\boldsymbol{\beta}\), with variance-covariance matrix \(\sigma^2(\mathbf{X}'\mathbf{X})^{-1}\), given that the errors are normally distributed.</p>
+    </div>
+
+    <div class="section">
+        <h2>Part 2: Distribution of OLS Estimator with i.i.d. Errors (not necessarily normal)</h2>
+        
+        <p>When we only assume that the errors are independent and identically distributed (i.i.d.) but not necessarily normal, the distribution of the OLS estimator changes. We can use the Central Limit Theorem (CLT) to characterize its asymptotic distribution.</p>
+        
+        <p><strong>Assumptions:</strong></p>
+        <ul>
+            <li>The errors \(\varepsilon_i\) are i.i.d. with mean 0 and variance \(\sigma^2\)</li>
+            <li>The errors have finite fourth moments</li>
+            <li>The limit of \(\frac{1}{n}\mathbf{X}'\mathbf{X}\) exists and is non-singular as \(n \to \infty\)</li>
+        </ul>
+        
+        <p><strong>Result:</strong></p>
+        <p>Under these assumptions, the OLS estimator is asymptotically normal:</p>
+        <div class="equation">
+            \[
+            \sqrt{n}(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}) \xrightarrow{d} \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{Q}^{-1})
+            \]
+        </div>
+        <p>where \(\mathbf{Q} = \lim_{n \to \infty} \frac{1}{n}\mathbf{X}'\mathbf{X}\) and \(\xrightarrow{d}\) denotes convergence in distribution.</p>
+        
+        <p><strong>Explanation:</strong></p>
+        <ol>
+            <li>The OLS estimator can still be written as \(\hat{\boldsymbol{\beta}} = \boldsymbol{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}\).</li>
+            <li>The term \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol{\varepsilon}\) is a sum of i.i.d. random variables (transformed by the matrix \((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\)).</li>
+            <li>By the CLT, this sum, when properly normalized, converges to a normal distribution as the sample size increases.</li>
+            <li>The asymptotic normality holds regardless of the specific distribution of the errors, as long as they are i.i.d. with finite variance.</li>
+        </ol>
+        
+        <p><strong>Key Differences:</strong></p>
+        <ol>
+            <li><strong>Finite Sample vs. Asymptotic:</strong> With normal errors, the OLS estimator is exactly normally distributed for any sample size. With i.i.d. errors, normality is an asymptotic result.</li>
+            <li><strong>Convergence Rate:</strong> The \(\sqrt{n}\) factor in the asymptotic result indicates the rate of convergence to normality.</li>
+            <li><strong>Robustness:</strong> The asymptotic result is more robust as it holds for a wider class of error distributions.</li>
+            <li><strong>Inference:</strong> For small samples with non-normal errors, standard inferential procedures based on normality may not be reliable.</li>
+        </ol>
+    </div>
+</body>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
