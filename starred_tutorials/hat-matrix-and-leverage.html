@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hat Matrix in Linear Regression: Geometric Interpretation and Leverage Points</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: "Computer Modern", serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hat Matrix in Linear Regression: Geometric Interpretation and Leverage Points</h1>
+
+    <div class="section">
+        <h2>1. Definition of the Hat Matrix</h2>
+        <p>In linear regression, the hat matrix H is defined as:</p>
+        <div class="equation">
+            \[
+            \mathbf{H} = \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'
+            \]
+        </div>
+        <p>where X is the design matrix of predictors.</p>
+        <p>The hat matrix relates the observed response values y to the fitted values ŷ:</p>
+        <div class="equation">
+            \[
+            \hat{\mathbf{y}} = \mathbf{H}\mathbf{y}
+            \]
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Geometric Interpretation</h2>
+        <p>The hat matrix has several important geometric interpretations:</p>
+        
+        <h3>2.1 Projection Matrix</h3>
+        <p>H is a projection matrix that projects the response vector y onto the column space of X. Geometrically, this means:</p>
+        <ul>
+            <li>H projects y onto the hyperplane spanned by the columns of X.</li>
+            <li>The fitted values ŷ are the orthogonal projections of y onto this hyperplane.</li>
+            <li>The residuals e = y - ŷ are orthogonal to the column space of X.</li>
+        </ul>
+
+        <h3>2.2 Properties of H</h3>
+        <ul>
+            <li>H is symmetric: H' = H</li>
+            <li>H is idempotent: H² = H</li>
+            <li>The trace of H equals the rank of X: tr(H) = rank(X)</li>
+        </ul>
+
+        <h3>2.3 Geometric Meaning of h_ii</h3>
+        <p>The diagonal elements h_ii of H have a special interpretation:</p>
+        <ul>
+            <li>0 ≤ h_ii ≤ 1 for all i</li>
+            <li>h_ii represents the amount of leverage exerted by the i-th observation on its own fitted value.</li>
+            <li>Geometrically, h_ii is the squared distance of the i-th point from the centroid of the X space, relative to the total squared distance of all points from the centroid.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Leverage Points</h2>
+        <p>Leverage points are observations that have a large influence on the regression model due to their extreme values in the predictor space.</p>
+
+        <h3>3.1 Identification of Leverage Points</h3>
+        <p>Leverage points are identified using the diagonal elements h_ii of the hat matrix:</p>
+        <ul>
+            <li>An observation i is considered a leverage point if h_ii > 2p/n, where p is the number of predictors and n is the number of observations.</li>
+            <li>This cutoff is based on the fact that the average h_ii is p/n.</li>
+        </ul>
+
+        <h3>3.2 Geometric Interpretation of Leverage</h3>
+        <p>Geometrically, leverage points are observations that:</p>
+        <ul>
+            <li>Lie far from the center of the predictor space.</li>
+            <li>Have unusual combinations of predictor values.</li>
+            <li>Exert a strong influence on the slope of the regression line or hyperplane.</li>
+        </ul>
+
+        <h3>3.3 Impact of Leverage Points</h3>
+        <ul>
+            <li>High leverage points can significantly affect the regression coefficients.</li>
+            <li>They may or may not be influential points, depending on whether their y-values are also extreme.</li>
+            <li>Points with high leverage but small residuals can actually improve the precision of the regression estimates.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Relationship Between Hat Matrix and Leverage Points</h2>
+        <p>The hat matrix provides a direct way to quantify the leverage of each observation:</p>
+        <ul>
+            <li>The diagonal elements h_ii measure the potential for an observation to influence the regression.</li>
+            <li>Larger h_ii values indicate higher leverage.</li>
+            <li>The hat matrix allows for easy identification of leverage points without having to calculate distances in multi-dimensional space.</li>
+        </ul>
+        <p>In essence, the hat matrix bridges the gap between the algebraic formulation of linear regression and its geometric interpretation, with leverage points being a key concept in understanding the influence of individual observations on the regression model.</p>
+    </div>
+</body>
+</html>
