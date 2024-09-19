@@ -1,0 +1,66 @@
+<html></html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        h1, h2 { color: #333; }
+        .step { margin-bottom: 20px; }
+        .math { font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>Derivation and Proof of Chebyshev's Inequality</h1>
+
+    <p>Chebyshev's inequality states that for a random variable X with finite expected value μ and finite non-zero variance σ²:</p>
+
+    <p class="math">P(|X - μ| ≥ kσ) ≤ 1/k² for any real number k > 0</p>
+
+    <h2>Derivation and Proof:</h2>
+
+    <div class="step">
+        <h3>Step 1: Define an indicator function</h3>
+        <p>Let's define an indicator function I:</p>
+        <p class="math">I = 1 if |X - μ| ≥ kσ</p>
+        <p class="math">I = 0 if |X - μ| < kσ</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 2: Express the probability using the indicator function</h3>
+        <p class="math">P(|X - μ| ≥ kσ) = E[I]</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 3: Use the properties of expectation</h3>
+        <p class="math">E[(X - μ)²] ≥ E[(X - μ)² · I]</p>
+        <p>This is true because (X - μ)² is always non-negative, and we're only considering the cases where I = 1.</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 4: Apply the definition of I</h3>
+        <p class="math">E[(X - μ)² · I] ≥ E[(kσ)² · I] = k²σ² · E[I]</p>
+        <p>This is because when I = 1, we know that |X - μ| ≥ kσ, so (X - μ)² ≥ (kσ)².</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 5: Use the definition of variance</h3>
+        <p class="math">E[(X - μ)²] = σ²</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 6: Combine the inequalities</h3>
+        <p class="math">σ² ≥ k²σ² · E[I]</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 7: Solve for E[I]</h3>
+        <p class="math">E[I] ≤ 1/k²</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 8: Conclusion</h3>
+        <p>Since E[I] = P(|X - μ| ≥ kσ), we have proven Chebyshev's inequality:</p>
+        <p class="math">P(|X - μ| ≥ kσ) ≤ 1/k²</p>
+    </div>
+
+    <p>This completes the derivation and proof of Chebyshev's inequality.</p>
+</body>
+</html>

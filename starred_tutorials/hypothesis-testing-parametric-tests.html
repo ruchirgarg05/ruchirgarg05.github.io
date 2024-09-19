@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentals of Hypothesis Testing and Parametric Tests</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .section {
+            margin: 1em 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+        }
+        .equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fundamentals of Hypothesis Testing and Parametric Tests</h1>
+
+    <div class="section">
+        <h2>4. Fundamentals of Hypothesis Testing</h2>
+
+        <h3>4.1 Null and Alternative Hypotheses</h3>
+        <p>Hypothesis testing involves two hypotheses:</p>
+        <ul>
+            <li>Null Hypothesis (H₀): A statement of no effect or no difference</li>
+            <li>Alternative Hypothesis (H₁ or H_A): A statement of an effect or a difference</li>
+        </ul>
+        <p>Example:</p>
+        <div class="equation">
+            \[
+            \begin{aligned}
+            H_0: \mu &= \mu_0 \\
+            H_1: \mu &\neq \mu_0
+            \end{aligned}
+            \]
+        </div>
+
+        <h3>4.2 Type I and Type II Errors</h3>
+        <ul>
+            <li>Type I Error (α): Rejecting H₀ when it's true</li>
+            <li>Type II Error (β): Failing to reject H₀ when it's false</li>
+        </ul>
+        <p>Relationship:</p>
+        <div class="equation">
+            \[
+            \text{Power} = 1 - \beta = P(\text{Reject } H_0 | H_1 \text{ is true})
+            \]
+        </div>
+
+        <h3>4.3 Power of a Test</h3>
+        <p>Power is the probability of correctly rejecting a false null hypothesis. It depends on:</p>
+        <ul>
+            <li>Sample size (n)</li>
+            <li>Effect size (δ)</li>
+            <li>Significance level (α)</li>
+        </ul>
+        <p>For a two-sided z-test:</p>
+        <div class="equation">
+            \[
+            \text{Power} = \Phi\left(\frac{\delta\sqrt{n}}{\sigma} - z_{1-\alpha/2}\right) + \Phi\left(-\frac{\delta\sqrt{n}}{\sigma} - z_{1-\alpha/2}\right)
+            \]
+        </div>
+        <p>Where Φ is the standard normal cumulative distribution function.</p>
+
+        <h3>4.4 p-values and Significance Levels</h3>
+        <p>The p-value is the probability of obtaining test results at least as extreme as the observed results, assuming the null hypothesis is true.</p>
+        <p>Decision rule: Reject H₀ if p-value < α (significance level)</p>
+    </div>
+
+    <div class="section">
+        <h2>5. Parametric Tests</h2>
+
+        <h3>5.1 Z-test</h3>
+        <p>Used when population standard deviation is known and sample size is large.</p>
+        <p>Test statistic:</p>
+        <div class="equation">
+            \[
+            Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}
+            \]
+        </div>
+
+        <h3>5.2 T-test</h3>
+        <p>Used when population standard deviation is unknown and sample size is small.</p>
+        <p>One-sample t-test statistic:</p>
+        <div class="equation">
+            \[
+            t = \frac{\bar{X} - \mu_0}{s / \sqrt{n}}
+            \]
+        </div>
+        <p>Two-sample t-test statistic (equal variances):</p>
+        <div class="equation">
+            \[
+            t = \frac{(\bar{X}_1 - \bar{X}_2) - (\mu_1 - \mu_2)}{s_p \sqrt{\frac{2}{n}}}
+            \]
+        </div>
+        <p>Where \(s_p\) is the pooled standard deviation.</p>
+
+        <h3>5.3 ANOVA (Analysis of Variance)</h3>
+        <p>Used to compare means of three or more groups.</p>
+        <p>F-statistic for one-way ANOVA:</p>
+        <div class="equation">
+            \[
+            F = \frac{\text{Between-group variability}}{\text{Within-group variability}} = \frac{MS_B}{MS_W}
+            \]
+        </div>
+
+        <h3>5.4 Chi-square Tests</h3>
+        <p>Used for categorical data analysis.</p>
+        <p>Chi-square statistic for goodness-of-fit:</p>
+        <div class="equation">
+            \[
+            \chi^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i}
+            \]
+        </div>
+        <p>Where O_i are observed frequencies and E_i are expected frequencies.</p>
+    </div>
+
+    <div class="section">
+        <h3>Interview-Style Question</h3>
+        <p><strong>Question:</strong> A company claims that their new process reduces the mean production time from 50 minutes to 45 minutes. A sample of 36 products produced with the new process has a mean production time of 47 minutes with a standard deviation of 6 minutes. At a 5% significance level, can we conclude that the new process has reduced the mean production time?</p>
+        
+        <p><strong>Solution:</strong></p>
+        <ol>
+            <li>Set up hypotheses:
+                <div class="equation">
+                    \[
+                    \begin{aligned}
+                    H_0: \mu &= 50 \\
+                    H_1: \mu &< 50
+                    \end{aligned}
+                    \]
+                </div>
+            </li>
+            <li>Choose test: We'll use a one-sample t-test (unknown population standard deviation)</li>
+            <li>Calculate t-statistic:
+                <div class="equation">
+                    \[
+                    t = \frac{\bar{X} - \mu_0}{s / \sqrt{n}} = \frac{47 - 50}{6 / \sqrt{36}} = -3
+                    \]
+                </div>
+            </li>
+            <li>Degrees of freedom: df = n - 1 = 35</li>
+            <li>Find critical value: t_critical (0.05, 35) ≈ -1.690 (one-tailed)</li>
+            <li>Decision: Since t < t_critical, we reject H₀</li>
+            <li>Alternatively, calculate p-value:
+                <div class="equation">
+                    \[
+                    p\text{-value} = P(T \leq -3) \approx 0.0024
+                    \]
+                </div>
+            </li>
+        </ol>
+        <p>Conclusion: At a 5% significance level, we have sufficient evidence to conclude that the new process has reduced the mean production time.</p>
+    </div>
+</body>
+</html>
