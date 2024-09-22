@@ -322,10 +322,11 @@
                 document.getElementById('speedSlider').addEventListener('input', updateSpeed);
                 document.getElementById('trailLengthSlider').addEventListener('input', updateTrailLength);
 
-                // Load drawing from localStorage if it exists
-                const savedDrawing = localStorage.getItem('savedDrawing');
+                // Load drawing from URL parameters if they exist
+                const urlParams = new URLSearchParams(window.location.search);
+                const savedDrawing = urlParams.get('drawing');
                 if (savedDrawing) {
-                    drawing = JSON.parse(savedDrawing);
+                    drawing = JSON.parse(decodeURIComponent(savedDrawing));
                     redrawSavedDrawing();
                 }
             };
@@ -359,15 +360,14 @@
 
             p.mouseReleased = function() {
                 isDrawing = false;
-                // Save drawing to localStorage
-                localStorage.setItem('savedDrawing', JSON.stringify(drawing));
-                // Reload the page
-                location.reload();
+                // Save drawing to URL parameters and reload
+                const drawingParam = encodeURIComponent(JSON.stringify(drawing));
+                window.location.href = window.location.pathname + '?drawing=' + drawingParam;
             };
 
             p.mouseDragged = function() {
                 if (isDrawing && p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height) {
-                    drawing.push(p.createVector(p.mouseX, p.mouseY));
+                    drawing.push({x: p.mouseX, y: p.mouseY});
                 }
             };
 
@@ -379,7 +379,8 @@
                 isTransforming = false;
                 p.background(255);
                 fourierCanvas.background(255);
-                localStorage.removeItem('savedDrawing');
+                // Clear URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
             }
 
             function startTransform() {
@@ -426,7 +427,7 @@
 
                     fourierCanvas.ellipse(x, y, 8);
 
-                    path.unshift(p.createVector(x, y));
+                    path.unshift({x, y});
 
                     fourierCanvas.beginShape();
                     fourierCanvas.noFill();
