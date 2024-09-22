@@ -1,3 +1,6 @@
 [submodule "fourier"]
 	path = fourier
 	url = https://github.com/Jezzamonn/fourier.git
+[submodule "fftint"]
+	path = fftint
+	url = https://github.com/Jezzamonn/fourier.git
