@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 25px;
+        }
+        .formula {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+            font-family: "Courier New", monospace;
+        }
+        .derivation {
+            color: #666;
+            font-style: italic;
+            margin-left: 20px;
+        }
+        .dimensions {
+            color: #2ecc71;
+            margin-left: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <h1>Linear Regression Analysis Cheat Sheet</h1>
+
+    <h2>Model Specification</h2>
+    <div class="formula">Model: Y = XB + ε</div>
+    <div class="dimensions">
+        Dimensions:<br>
+        • Y: (n×1) response vector<br>
+        • X: (n×p) design matrix (including column of 1's for intercept)<br>
+        • B: (p×1) coefficient vector<br>
+        • ε: (n×1) error vector
+    </div>
+
+    <h2>Key Parameters & Their Derivation</h2>
+    
+    <h3>Coefficient Estimate (β̂)</h3>
+    <div class="formula">β̂ = (X'X)⁻¹X'Y</div>
+    <div class="derivation">Derivation: Minimize SSE = (Y-XB)'(Y-XB), differentiate w.r.t B, set to zero</div>
+
+    <h3>Fitted Values (Ŷ)</h3>
+    <div class="formula">Ŷ = Xβ̂ = X(X'X)⁻¹X'Y = HY</div>
+    <div class="derivation">where H = X(X'X)⁻¹X' is the hat matrix<br>
+    Derivation: Direct substitution of β̂ into model equation</div>
+
+    <h3>Residuals (e)</h3>
+    <div class="formula">e = Y - Ŷ = (I - H)Y</div>
+    <div class="derivation">Derivation: Difference between observed and fitted values</div>
+
+    <h3>Error Variance Estimate (σ²)</h3>
+    <div class="formula">σ̂² = e'e/(n-p)</div>
+    <div class="derivation">Derivation: Sum of squared residuals divided by degrees of freedom</div>
+
+    <h3>Variance-Covariance Matrix of β̂</h3>
+    <div class="formula">Var(β̂) = σ̂²(X'X)⁻¹</div>
+    <div class="derivation">Derivation: Apply variance operator to β̂ formula, use error assumptions</div>
+
+    <h3>Standard Errors of Coefficients</h3>
+    <div class="formula">SE(β̂ᵢ) = √[σ̂²(X'X)⁻¹ᵢᵢ]</div>
+    <div class="derivation">Derivation: Square root of diagonal elements of variance-covariance matrix</div>
+
+    <h2>Model Assessment</h2>
+
+    <h3>R-squared</h3>
+    <div class="formula">R² = 1 - (e'e)/(Y'Y - nȳ²)</div>
+    <div class="derivation">Derivation: 1 - (SSE/SST), where SST is total sum of squares</div>
+
+    <h3>Adjusted R-squared</h3>
+    <div class="formula">R²ₐᵢᵣ = 1 - [(e'e)/(n-p)]/[(Y'Y - nȳ²)/(n-1)]</div>
+    <div class="derivation">Derivation: R² adjusted for degrees of freedom</div>
+
+    <h3>F-statistic</h3>
+    <div class="formula">F = (R²/p-1)/((1-R²)/(n-p))</div>
+    <div class="derivation">Derivation: Ratio of explained to unexplained variance per degree of freedom</div>
+
+    <h3>t-statistic for βᵢ</h3>
+    <div class="formula">t = β̂ᵢ/SE(β̂ᵢ)</div>
+    <div class="derivation">Derivation: Coefficient estimate divided by its standard error</div>
+
+    <h2>Prediction</h2>
+
+    <h3>Point Prediction</h3>
+    <div class="formula">ŷₙₑw = x'ₙₑwβ̂</div>
+    <div class="derivation">Derivation: Direct application of model equation</div>
+
+    <h3>Prediction Interval</h3>
+    <div class="formula">ŷₙₑw ± t₍α/₂,ₙ₋ₚ₎√[σ̂²(1 + x'ₙₑw(X'X)⁻¹xₙₑw)]</div>
+    <div class="derivation">Derivation: Account for both model uncertainty and new observation error</div>
+
+    <h3>Confidence Interval for Mean Response</h3>
+    <div class="formula">ŷₙₑw ± t₍α/₂,ₙ₋ₚ₎√[σ̂²x'ₙₑw(X'X)⁻¹xₙₑw]</div>
+    <div class="derivation">Derivation: Account for model uncertainty only</div>
+
+    <h2>Diagnostic Measures</h2>
+
+    <h3>Leverage Values</h3>
+    <div class="formula">hᵢᵢ = diagonal elements of H</div>
+    <div class="derivation">Derivation: Diagonal elements of hat matrix</div>
+
+    <h3>Studentized Residuals</h3>
+    <div class="formula">rᵢ = eᵢ/(σ̂√(1-hᵢᵢ))</div>
+    <div class="derivation">Derivation: Residuals scaled by their standard deviation</div>
+
+    <h3>Cook's Distance</h3>
+    <div class="formula">Dᵢ = (rᵢ²/p)(hᵢᵢ/(1-hᵢᵢ))</div>
+    <div class="derivation">Derivation: Measure of combined leverage and residual magnitude</div>
+
+
+
+
+
+    <h2>Generalized Least Squares (GLS)</h2>
+    
+    <h3>Model Specification</h3>
+    <div class="formula">Y = XB + ε, where Var(ε) = σ²Ω</div>
+    <div class="dimensions">
+        • Ω: (n×n) known positive definite matrix<br>
+        • All other dimensions same as OLS
+    </div>
+
+    <h3>GLS Estimator</h3>
+    <div class="formula">β̂ₐₗₛ = (X'Ω⁻¹X)⁻¹X'Ω⁻¹Y</div>
+    <div class="derivation">Derivation: Minimize (Y-XB)'Ω⁻¹(Y-XB), differentiate w.r.t B, set to zero</div>
+
+    <h3>Variance of GLS Estimator</h3>
+    <div class="formula">Var(β̂ₐₗₛ) = σ²(X'Ω⁻¹X)⁻¹</div>
+    <div class="derivation">Derivation: Apply variance operator to β̂ₐₗₛ formula</div>
+
+    <h3>Feasible GLS (When Ω is unknown)</h3>
+    <div class="formula">
+        1. Get β̂ₒₗₛ = (X'X)⁻¹X'Y<br>
+        2. Estimate Ω from residuals<br>
+        3. Compute β̂ₐₗₛ using estimated Ω
+    </div>
+    <div class="derivation">Iterative process until convergence</div>
+
+    <h2>Maximum A Posteriori (MAP) Estimation</h2>
+
+    <h3>Model Assumptions</h3>
+    <div class="formula">
+        Prior: B ~ N(μ₀, Σ₀)<br>
+        Likelihood: Y|X,B ~ N(XB, σ²I)
+    </div>
+    <div class="dimensions">
+        • μ₀: (p×1) prior mean vector<br>
+        • Σ₀: (p×p) prior covariance matrix
+    </div>
+
+    <h3>MAP Estimator</h3>
+    <div class="formula">β̂ₘₐₚ = (X'X + σ²Σ₀⁻¹)⁻¹(X'Y + σ²Σ₀⁻¹μ₀)</div>
+    <div class="derivation">Derivation: Maximize posterior p(B|Y,X) ∝ p(Y|X,B)p(B)</div>
+
+    <h3>Posterior Variance</h3>
+    <div class="formula">Var(B|Y,X) = σ²(X'X + σ²Σ₀⁻¹)⁻¹</div>
+    <div class="derivation">Derivation: Inverse of the negative Hessian of log posterior</div>
+
+    <h3>Special Cases</h3>
+    <div class="note">
+        1. When Σ₀⁻¹ → 0 (uninformative prior): MAP → OLS<br>
+        2. When σ² → 0 (perfect data): MAP → Maximum Likelihood<br>
+        3. When X'X → 0 (no data): MAP → Prior mean
+    </div>
+
+    <h3>Ridge Regression Connection</h3>
+    <div class="formula">When μ₀ = 0 and Σ₀ = λ⁻¹I:<br>
+    β̂ᵣᵢᵈᵧₑ = (X'X + λI)⁻¹X'Y</div>
+    <div class="derivation">MAP estimation with zero-mean Gaussian prior is equivalent to Ridge regression</div>
+
+    <h3>Prediction with MAP</h3>
+    <div class="formula">
+    ŷₙₑw = x'ₙₑwβ̂ₘₐₚ<br>
+    Var(ŷₙₑw) = σ²x'ₙₑw(X'X + σ²Σ₀⁻¹)⁻¹xₙₑw
+    </div>
+    <div class="derivation">Accounts for both prior uncertainty and data uncertainty</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
